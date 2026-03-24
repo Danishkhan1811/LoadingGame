@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Core entry point",
+    "path": "./packages/core/dist/index.js",
+    "limit": "8 kB",
+    "gzip": true
+  },
+  {
+    "name": "Snake game chunk",
+    "path": "./packages/core/dist/games/snake.js",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "Brick Breaker chunk",
+    "path": "./packages/core/dist/games/brick-breaker.js",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "Flappy chunk",
+    "path": "./packages/core/dist/games/flappy.js",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "2048 chunk",
+    "path": "./packages/core/dist/games/2048.js",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "Wordle-lite chunk",
+    "path": "./packages/core/dist/games/wordle-lite.js",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "Asteroids chunk",
+    "path": "./packages/core/dist/games/asteroids.js",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "Memory Cards chunk",
+    "path": "./packages/core/dist/games/memory-cards.js",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "Whack-a-Mole chunk",
+    "path": "./packages/core/dist/games/whack-a-mole.js",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "React wrapper",
+    "path": "./packages/core/dist/react/index.js",
+    "limit": "4 kB",
+    "gzip": true
+  },
+  {
+    "name": "Vue wrapper",
+    "path": "./packages/core/dist/vue/index.js",
+    "limit": "4 kB",
+    "gzip": true
+  },
+  {
+    "name": "Svelte wrapper",
+    "path": "./packages/core/dist/svelte/index.js",
+    "limit": "4 kB",
+    "gzip": true
+  }
+]

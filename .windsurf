@@ -1,0 +1,154 @@
+# .windsurf — AI Development Context
+
+> This file provides Cascade (Windsurf's AI) with full context on the project.
+> Reference SPEC.md for deep technical details.
+
+## What This Project Is
+
+`loading-games` is an open-source npm library. It replaces loading spinners with playable mini-games. The API surface is intentionally minimal: one component, one `active` boolean prop.
+
+## Build Order (Follow This Sequence)
+
+### Phase 0 — Monorepo Scaffolding
+1. Initialize pnpm workspace with Turborepo
+2. Create package skeletons for `core`, `react`, `vue`, `svelte`
+3. Set up shared `tsconfig.base.json`, `eslint.config.js`
+4. Configure `tsup` in each package for dual ESM/CJS output with code splitting
+5. Set up Vitest
+
+**Done when:** `pnpm build` succeeds and produces `dist/` in all packages.
+
+### Phase 1 — Core Package
+1. Write all TypeScript types (`types.ts`) — see SPEC.md §5
+2. Implement `theme.ts` (3-level resolution: prop > CSS var > system)
+3. Implement `scores.ts` (localStorage persistence, namespace scoping)
+4. Implement `delay.ts` (the delay + minDisplay timer logic)
+5. Register `<loading-game>` Web Component (`component.ts`)
+6. Implement `GameController` (`controller.ts`) with game lifecycle
+7. Wire dynamic imports for all 8 game slots (stub implementations first)
+8. Write unit tests for theme, scores, delay logic
+
+**Done when:** `<loading-game game="snake" active="true">` renders a placeholder canvas.
+
+### Phase 2 — Games (Implement in this order)
+Build each game as a class implementing `GamePlugin` interface:
+
+1. **Snake** — simplest, grid-based, good baseline
+2. **Memory Cards** — no physics, just state + animation
+3. **Whack-a-Mole** — timer-based, touch-first
+4. **2048** — turn-based, safest to interrupt
+5. **Flappy Bird** — physics loop, good canvas test
+6. **Brick Breaker** — physics + power-ups
+7. **Asteroids** — most complex, vector math
+8. **Wordle-lite** — unique (text input), virtual keyboard
+
+Each game must:
+- Implement `init(canvas, theme)`, `start()`, `pause()`, `resume()`, `destroy()`
+- Use ONLY `requestAnimationFrame` for animation (no `setInterval`)
+- Apply theme colors from the `ThemeObject` passed to `init()`
+- Emit score updates via callback
+- Clean up ALL event listeners and animation frames in `destroy()`
+- Stay under 10 kB gzipped
+
+**Done when:** All 8 games are playable in a browser test page.
+
+### Phase 3 — Framework Wrappers
+1. **React** — `LoadingGame.tsx` wrapping the Web Component, full prop types
+2. **Vue 3** — `LoadingGame.vue` + `useLoadingGame` composable
+3. **Svelte** — `LoadingGame.svelte` component
+
+Each wrapper:
+- Imports `loading-games` (registers the web component)
+- Syncs props → web component attributes/properties reactively
+- Maps framework event conventions to DOM event listeners
+- Ships full TypeScript types
+
+**Done when:** Example apps in `apps/examples/` run for all three frameworks.
+
+### Phase 4 — CLI Tool
+- `npx loading-games init`
+- Detects framework (React/Vue/Svelte/vanilla) from `package.json`
+- Prints exact code snippet for detected framework
+- Optionally installs the package
+
+### Phase 5 — Demo Site
+- Astro + React islands
+- Pages: `/`, `/games`, `/configurator`, `/docs`
+- Live game embeds (no `active` needed — always playing)
+- Code switcher (React / Vue / Svelte / Vanilla tabs)
+- Theme configurator with real-time preview
+
+---
+
+## Critical Constraints
+
+### Performance
+- Core bundle MUST be < 8 kB gzipped — enforced by CI
+- Each game chunk MUST be < 10 kB gzipped — enforced by CI
+- ALL animations MUST use `requestAnimationFrame`, never `setInterval`
+- Zero runtime dependencies in the core package
+
+### Accessibility (Non-negotiable)
+- Every game canvas MUST have `role="application"` and `aria-label`
+- Skip link MUST be the first focusable element inside the component
+- ALL games MUST pause when `document.visibilityState === 'hidden'`
+- MUST check `prefers-reduced-motion` and show static pattern if true
+- Touch targets MUST be ≥ 44×44px
+
+### Error Safety
+- `destroy()` MUST be called when `active` becomes `false` or component unmounts
+- No orphaned `requestAnimationFrame` callbacks
+- No orphaned event listeners
+- `onError` prop fires immediately when active becomes false due to an error
+
+---
+
+## File Naming Conventions
+
+- Components: PascalCase (`LoadingGame.tsx`)
+- Utilities: camelCase (`scoreStore.ts`)
+- Game folders: kebab-case (`brick-breaker/`)
+- Types: always in `types.ts` per package
+- Tests: `*.test.ts` co-located with source
+
+---
+
+## Environment Variables
+
+```bash
+# .env.development
+NEXT_PUBLIC_DEMO_SITE=http://localhost:3000
+NODE_ENV=development   # enables dev-mode console warnings in the library
+```
+
+---
+
+## Key Files Reference
+
+| File | Purpose |
+|------|---------|
+| `packages/core/src/types.ts` | ALL TypeScript interfaces — source of truth |
+| `packages/core/src/controller.ts` | Game lifecycle state machine |
+| `packages/core/src/delay.ts` | 800ms delay + minDisplay logic |
+| `packages/core/src/theme.ts` | Theme resolution (prop > CSS var > system) |
+| `packages/core/src/scores.ts` | localStorage score store |
+| `packages/core/src/component.ts` | Web Component registration |
+| `packages/core/src/games/*/index.ts` | Each game's `GamePlugin` implementation |
+| `SPEC.md` | Complete technical specification |
+| `CONTRIBUTING.md` | How to add new games |
+
+---
+
+## Common Gotchas
+
+1. **Web Component reactivity:** `attributeChangedCallback` only fires for attributes listed in `static observedAttributes`. Properties (objects like `theme`) must be set via property assignment, not attributes.
+
+2. **React + Web Components:** React 18 passes event handlers as attributes, not properties. Use a `useEffect` + `ref` to attach `theme` object and callback handlers.
+
+3. **Canvas sizing:** Always set `canvas.width` and `canvas.height` in device pixels (multiply by `window.devicePixelRatio`), then scale the context. Prevents blurry canvas on retina displays.
+
+4. **Dynamic imports + tsup:** Code splitting requires `splitting: true` in tsup config. Each game must be a separate entry point or lazily imported so tsup emits separate chunks.
+
+5. **pnpm workspace:** Use `workspace:*` for internal package dependencies. Don't use `file:` references.
+
+6. **Accessibility + Canvas:** Canvas elements with `role="application"` MUST have `tabIndex="0"` to receive keyboard focus.

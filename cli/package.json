@@ -1,0 +1,22 @@
+{
+  "name": "loading-games-cli",
+  "version": "0.0.1",
+  "description": "CLI tool for loading-games: npx loading-games init",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "loading-games": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --outDir dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0",
+    "tsup": "^8.0.0"
+  }
+}
