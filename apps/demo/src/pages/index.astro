@@ -5,101 +5,142 @@ import GamePreview from '../components/GamePreview'
 ---
 
 <Layout title="loading-games — Playable mini-games for loading states">
-  <!-- Hero -->
-  <section class="relative overflow-hidden">
-    <div class="mx-auto max-w-6xl px-4 py-20 lg:py-28">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <div class="inline-flex items-center gap-2 rounded-full bg-brand-500/10 border border-brand-500/20 px-3 py-1 text-sm text-brand-400 mb-6">
-            <span>⚡</span>
-            <span>v1.0 — Open Source</span>
+
+  <!-- ── Hero ── -->
+  <section style="position:relative;overflow:hidden;padding:96px 0 80px">
+    <div class="glow-blob" style="width:600px;height:600px;background:#2f81f7;top:-200px;left:-100px"></div>
+    <div class="glow-blob" style="width:500px;height:500px;background:#bc8cff;bottom:-150px;right:-80px;animation-delay:2s"></div>
+
+    <div class="mx-auto max-w-7xl px-6" style="position:relative">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Left: Copy -->
+        <div style="display:flex;flex-direction:column;gap:28px">
+          <div style="display:inline-flex;align-items:center;gap:8px;background:#161b22;border:1px solid #30363d;border-radius:100px;padding:6px 16px;width:fit-content">
+            <span style="width:7px;height:7px;border-radius:50%;background:#39d353;display:inline-block"></span>
+            <span style="font-size:13px;font-weight:500;color:#8b949e">v1.0 — Open Source &amp; Production Ready</span>
           </div>
-          <h1 class="text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
-            Turn loading spinners into
-            <span class="text-brand-400"> playable games</span>
+
+          <h1 style="font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:#e6edf3;margin:0">
+            Turn boring<br/>
+            <span class="gradient-text">loading screens</span><br/>
+            into playable games
           </h1>
-          <p class="mt-4 text-lg text-gray-400 leading-relaxed">
-            A zero-dependency JavaScript library that replaces boring loading states with engaging mini-games. Users play while they wait — and never abandon.
+
+          <p style="font-size:18px;color:#8b949e;line-height:1.7;max-width:480px;margin:0">
+            Zero-dependency library that replaces loading spinners with <span style="color:#e6edf3;font-weight:600">engaging mini-games</span>. Users play while they wait — and never abandon.
           </p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a href="/configurator" class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 font-medium text-white hover:bg-brand-500 transition-colors">
-              Try Configurator →
-            </a>
-            <div class="flex items-center gap-2 rounded-lg bg-gray-800/50 border border-gray-700 px-4 py-2.5 font-mono text-sm text-gray-300">
-              <span>npm install loading-games</span>
+
+          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+            <a href="/games" class="btn-primary" style="text-decoration:none">Play games →</a>
+            <a href="/docs"  class="btn-ghost"   style="text-decoration:none">View docs</a>
+            <div style="display:flex;align-items:center;gap:10px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px 14px">
+              <code style="font-family:monospace;font-size:13px;color:#79c0ff">npm i loading-games</code>
               <button
-                onclick="navigator.clipboard.writeText('npm install loading-games')"
-                class="text-gray-500 hover:text-white transition-colors"
+                onclick="navigator.clipboard.writeText('npm install loading-games');this.textContent='✓';setTimeout(()=>this.textContent='📋',1500)"
+                style="background:none;border:none;cursor:pointer;color:#8b949e;font-size:15px;padding:0;line-height:1"
                 title="Copy"
               >📋</button>
             </div>
           </div>
+
+          <!-- Stats row -->
+          <div style="display:flex;gap:32px;padding-top:8px">
+            {[['10 kB','Core bundle'],['4','Games live'],['0','Dependencies']].map(([val,lbl]) => (
+              <div>
+                <div class="gradient-text" style="font-size:1.75rem;font-weight:800;line-height:1">{val}</div>
+                <div style="font-size:12px;color:#8b949e;margin-top:2px">{lbl}</div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div class="relative h-[320px] rounded-xl border border-gray-800 bg-gray-900 overflow-hidden shadow-2xl shadow-brand-500/5">
-          <GamePreview client:load game="snake" active={true} />
+
+        <!-- Right: Live game preview -->
+        <div style="position:relative">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#2f81f730,#bc8cff20);border-radius:20px;filter:blur(40px)"></div>
+          <div class="card" style="position:relative;padding:3px;border-radius:18px;border-color:#30363d;animation:float 5s ease-in-out infinite">
+            <div style="background:#0d1117;border-radius:15px;overflow:hidden;height:380px">
+              <GamePreview client:load game="snake" active={true} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Features Grid -->
-  <section class="border-t border-gray-800 bg-gray-900/30">
-    <div class="mx-auto max-w-6xl px-4 py-16">
-      <h2 class="text-2xl font-bold text-center mb-10">Why loading-games?</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="rounded-lg border border-gray-800 bg-gray-900/50 p-5">
-          <div class="text-2xl mb-3">🪶</div>
-          <h3 class="font-semibold mb-1">Zero Dependencies</h3>
-          <p class="text-sm text-gray-400">Pure Web Component. No runtime deps. Works everywhere.</p>
-        </div>
-        <div class="rounded-lg border border-gray-800 bg-gray-900/50 p-5">
-          <div class="text-2xl mb-3">📦</div>
-          <h3 class="font-semibold mb-1">&lt;10 kB per Game</h3>
-          <p class="text-sm text-gray-400">Games lazy-load on first use. Core is under 8 kB gzipped.</p>
-        </div>
-        <div class="rounded-lg border border-gray-800 bg-gray-900/50 p-5">
-          <div class="text-2xl mb-3">🎮</div>
-          <h3 class="font-semibold mb-1">8 Games</h3>
-          <p class="text-sm text-gray-400">Snake, Flappy Bird, Memory Cards, Whack-a-Mole, and more.</p>
-        </div>
-        <div class="rounded-lg border border-gray-800 bg-gray-900/50 p-5">
-          <div class="text-2xl mb-3">🔌</div>
-          <h3 class="font-semibold mb-1">Framework Agnostic</h3>
-          <p class="text-sm text-gray-400">First-class React, Vue 3, and Svelte wrappers included.</p>
-        </div>
+  <!-- ── Features ── -->
+  <section style="border-top:1px solid #21262d;padding:80px 0">
+    <div class="mx-auto max-w-7xl px-6">
+      <div style="text-align:center;margin-bottom:56px">
+        <h2 style="font-size:2rem;font-weight:800;color:#e6edf3;margin-bottom:8px">Why developers love it</h2>
+        <p style="color:#8b949e;font-size:16px">Built for performance, designed for simplicity</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {[
+          { icon:'🪶', title:'Zero Dependencies',   body:'Pure Web Component. No runtime deps. Works everywhere, forever.' },
+          { icon:'📦', title:'<3 kB per Game',      body:'Lazy-loaded chunks. Core is 10 kB. Each game ~2 kB gzipped.' },
+          { icon:'🎮', title:'4 Games Live',         body:'Snake, Flappy, Memory Cards, Whack-a-Mole. 4 more in v1.1.' },
+          { icon:'⚛️', title:'Any Framework',        body:'First-class React, Vue 3, Svelte wrappers + TypeScript.' },
+        ].map((f) => (
+          <div class="card-hover" style="padding:24px">
+            <div style="font-size:32px;margin-bottom:14px">{f.icon}</div>
+            <h3 style="font-weight:700;font-size:15px;color:#e6edf3;margin-bottom:6px" set:html={f.title}></h3>
+            <p style="font-size:13px;color:#8b949e;line-height:1.6">{f.body}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- Code Tabs -->
-  <section class="border-t border-gray-800">
-    <div class="mx-auto max-w-6xl px-4 py-16">
-      <h2 class="text-2xl font-bold text-center mb-2">Get started in seconds</h2>
-      <p class="text-gray-400 text-center mb-8">One component. Any framework. Full TypeScript support.</p>
+  <!-- ── Code Tabs ── -->
+  <section style="border-top:1px solid #21262d;padding:80px 0;position:relative;overflow:hidden">
+    <div class="glow-blob" style="width:400px;height:400px;background:#2f81f7;top:50%;left:-100px;transform:translateY(-50%)"></div>
+    <div class="mx-auto max-w-7xl px-6" style="position:relative">
+      <div style="text-align:center;margin-bottom:48px">
+        <h2 style="font-size:2rem;font-weight:800;color:#e6edf3;margin-bottom:8px">Get started in seconds</h2>
+        <p style="color:#8b949e;font-size:16px">One component. Any framework. Full TypeScript support.</p>
+      </div>
       <CodeTabs client:load />
     </div>
   </section>
 
-  <!-- Games Preview -->
-  <section class="border-t border-gray-800 bg-gray-900/30">
-    <div class="mx-auto max-w-6xl px-4 py-16">
-      <h2 class="text-2xl font-bold text-center mb-2">Available Games</h2>
-      <p class="text-gray-400 text-center mb-8">Each game is a separate chunk — only loaded when needed.</p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {['snake', 'flappy', 'memory-cards', 'whack-a-mole', 'brick-breaker', '2048', 'wordle-lite', 'asteroids'].map((game) => (
-          <a href="/games" class="group rounded-lg border border-gray-800 bg-gray-900/50 p-4 text-center hover:border-brand-500/50 transition-colors">
-            <div class="text-3xl mb-2">
-              {game === 'snake' ? '🐍' : game === 'flappy' ? '🐦' : game === 'memory-cards' ? '🃏' : game === 'whack-a-mole' ? '🔨' : game === 'brick-breaker' ? '🧱' : game === '2048' ? '🔢' : game === 'wordle-lite' ? '📝' : '🚀'}
+  <!-- ── Games showcase ── -->
+  <section style="border-top:1px solid #21262d;padding:80px 0">
+    <div class="mx-auto max-w-7xl px-6">
+      <div style="text-align:center;margin-bottom:48px">
+        <h2 style="font-size:2rem;font-weight:800;color:#e6edf3;margin-bottom:8px">4 Games Live Now</h2>
+        <p style="color:#8b949e;font-size:16px">Each game is a lazy-loaded chunk — only fetched when first activated</p>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        {[
+          { name:'snake',        emoji:'🐍', color:'#39d353' },
+          { name:'flappy',       emoji:'🐦', color:'#2f81f7' },
+          { name:'memory-cards', emoji:'🃏', color:'#bc8cff' },
+          { name:'whack-a-mole', emoji:'🔨', color:'#f78166' },
+        ].map((g) => (
+          <a href="/games" class="card-hover" style="padding:24px;text-align:center;text-decoration:none;display:block">
+            <div style="font-size:44px;margin-bottom:10px">{g.emoji}</div>
+            <div style="font-weight:600;font-size:14px;color:#e6edf3;text-transform:capitalize;margin-bottom:8px">{g.name}</div>
+            <div style="display:inline-flex;align-items:center;gap:6px">
+              <span style={`width:6px;height:6px;border-radius:50%;background:${g.color};display:inline-block`}></span>
+              <span style={`font-size:11px;font-weight:600;color:${g.color}`}>Live</span>
             </div>
-            <div class="text-sm font-medium group-hover:text-brand-400 transition-colors">{game}</div>
           </a>
         ))}
       </div>
-      <div class="text-center mt-8">
-        <a href="/games" class="inline-flex items-center gap-2 text-brand-400 hover:text-brand-300 font-medium transition-colors">
-          Play all games →
-        </a>
+
+      <div style="text-align:center;margin-top:36px">
+        <a href="/games" class="btn-primary" style="text-decoration:none">Play All Games →</a>
+      </div>
+
+      <!-- Coming soon teaser -->
+      <div class="card" style="margin-top:40px;padding:28px;text-align:center">
+        <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#8b949e;margin-bottom:14px">Coming in v1.1</p>
+        <div style="display:flex;justify-content:center;gap:28px;font-size:36px;opacity:0.35">
+          <span>🧱</span><span>🔢</span><span>📝</span><span>🚀</span>
+        </div>
       </div>
     </div>
   </section>
+
 </Layout>

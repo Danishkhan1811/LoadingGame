@@ -1,44 +1,47 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import GamePreview from '../components/GamePreview'
-
-const games = [
-  { name: 'snake', emoji: '🐍', description: 'Arrow keys / swipe to move. Eat food, grow longer.', bundle: '~3 kB' },
-  { name: 'flappy', emoji: '🐦', description: 'Space / tap to flap. Dodge the pipes.', bundle: '~2 kB' },
-  { name: 'memory-cards', emoji: '🃏', description: 'Click / tap to flip. Match all pairs.', bundle: '~2 kB' },
-  { name: 'whack-a-mole', emoji: '🔨', description: 'Click / tap moles. 20-second rounds.', bundle: '~2 kB' },
-]
-
-// Coming in future releases:
-// { name: 'brick-breaker', emoji: '🧱', description: 'Mouse / touch to control paddle.', bundle: '~1 kB' },
-// { name: '2048', emoji: '🔢', description: 'Arrow keys / swipe to merge tiles.', bundle: '~1 kB' },
-// { name: 'wordle-lite', emoji: '📝', description: 'Guess the 5-letter word in 6 tries.', bundle: '~1 kB' },
-// { name: 'asteroids', emoji: '🚀', description: 'Arrow keys + space to shoot.', bundle: '~1 kB' },
+import GamesGrid from '../components/GamesGrid'
 ---
 
 <Layout title="Games — loading-games">
-  <div class="mx-auto max-w-6xl px-4 py-12">
-    <h1 class="text-3xl font-bold mb-2">All Games</h1>
-    <p class="text-gray-400 mb-10">Click any game to play it full-size. Each game is a separate lazy-loaded chunk.</p>
+  <div class="mx-auto max-w-5xl px-6 py-14">
 
-    <div class="grid sm:grid-cols-2 gap-6">
-      {games.map((g) => (
-        <div class="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden group">
-          <div class="relative h-[280px] bg-gray-950">
-            <GamePreview client:visible game={g.name} active={true} size="full" />
-          </div>
-          <div class="p-4 border-t border-gray-800">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="text-xl">{g.emoji}</span>
-                <h2 class="font-semibold text-lg">{g.name}</h2>
-              </div>
-              <span class="text-xs text-gray-500 bg-gray-800 px-2 py-0.5 rounded">{g.bundle}</span>
-            </div>
-            <p class="text-sm text-gray-400 mt-1">{g.description}</p>
-          </div>
-        </div>
-      ))}
+    <!-- Page Header -->
+    <div class="mb-10">
+      <div class="flex items-center gap-2 mb-3" style="font-size:13px;color:#8b949e">
+        <a href="/" style="color:#8b949e;text-decoration:none;hover:color:#e6edf3">Home</a>
+        <span>/</span>
+        <span style="color:#e6edf3">Games</span>
+      </div>
+      <h1 class="text-4xl font-bold mb-2" style="color:#e6edf3">
+        Playable Games
+      </h1>
+      <p style="font-size:16px;color:#8b949e;max-width:540px">
+        Click any game to open it in a popup. Each game is a separate lazy-loaded chunk — only fetched when first played.
+      </p>
+      <div class="flex items-center gap-4 mt-4" style="font-size:13px">
+        <span style="color:#39d353;display:flex;align-items:center;gap:6px">
+          <span style="width:8px;height:8px;border-radius:50%;background:#39d353;display:inline-block"></span>
+          4 games live
+        </span>
+        <span style="color:#8b949e">·</span>
+        <span style="color:#8b949e">4 more in v1.1</span>
+      </div>
+    </div>
+
+    <!-- Interactive Game Cards (React island with modal) -->
+    <GamesGrid client:load />
+
+    <!-- Coming Soon -->
+    <div class="mt-10 card" style="padding:28px;text-align:center">
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em">Coming in v1.1</p>
+      <div style="display:flex;justify-content:center;gap:28px;font-size:40px;opacity:0.4;margin-bottom:12px">
+        <span title="Brick Breaker">🧱</span>
+        <span title="2048">🔢</span>
+        <span title="Wordle Lite">📝</span>
+        <span title="Asteroids">🚀</span>
+      </div>
+      <p style="font-size:14px;color:#8b949e">Brick Breaker · 2048 · Wordle Lite · Asteroids</p>
     </div>
   </div>
 </Layout>

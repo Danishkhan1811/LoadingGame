@@ -19,24 +19,35 @@ const { title, description = 'Playable mini-games that replace loading spinners.
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <style>
+      nav { background: rgba(13,17,23,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #30363d; }
+      .nav-link { color: #8b949e; font-size: 14px; font-weight: 500; transition: color 0.15s; }
+      .nav-link:hover { color: #e6edf3; }
+      footer { background: #0d1117; border-top: 1px solid #30363d; }
+    </style>
   </head>
   <body class="min-h-screen flex flex-col">
-    <nav class="sticky top-0 z-50 border-b border-gray-800 bg-gray-950/80 backdrop-blur-sm">
-      <div class="mx-auto max-w-6xl flex items-center justify-between px-4 h-14">
-        <a href="/" class="flex items-center gap-2 font-bold text-lg">
-          <span class="text-2xl">⚡</span>
-          <span>loading-games</span>
+    <nav class="sticky top-0 z-50">
+      <div class="mx-auto max-w-7xl flex items-center justify-between px-6 h-14">
+        <a href="/" class="flex items-center gap-2.5 group" style="text-decoration:none">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#2f81f7" stroke="#2f81f7" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span style="font-weight:700;font-size:15px;color:#e6edf3;letter-spacing:-0.3px">loading<span style="color:#2f81f7">-games</span></span>
         </a>
-        <div class="flex items-center gap-6 text-sm text-gray-400">
-          <a href="/games" class="hover:text-white transition-colors">Games</a>
-          <a href="/configurator" class="hover:text-white transition-colors">Configurator</a>
-          <a href="/docs" class="hover:text-white transition-colors">Docs</a>
+
+        <div class="flex items-center gap-6">
+          <a href="/games"        class="nav-link">Games</a>
+          <a href="/configurator" class="nav-link">Configurator</a>
+          <a href="/docs"         class="nav-link">Docs</a>
           <a
             href="https://github.com/Danishkhan1811/LoadingGame"
-            target="_blank"
-            rel="noopener"
-            class="hover:text-white transition-colors"
+            target="_blank" rel="noopener"
+            style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#e6edf3;background:#21262d;border:1px solid #30363d;padding:5px 14px;border-radius:6px;transition:all 0.15s;text-decoration:none"
+            onmouseover="this.style.borderColor='#8b949e'"
+            onmouseout="this.style.borderColor='#30363d'"
           >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#e6edf3"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
             GitHub
           </a>
         </div>
@@ -47,12 +58,19 @@ const { title, description = 'Playable mini-games that replace loading spinners.
       <slot />
     </main>
 
-    <footer class="border-t border-gray-800 py-8 text-center text-sm text-gray-500">
-      <div class="mx-auto max-w-6xl px-4">
-        <p>MIT License &middot; Made with ❤️ for better loading UX</p>
-        <div class="mt-2 flex items-center justify-center gap-4">
-          <a href="https://npmjs.com/package/loading-games" class="hover:text-gray-300 transition-colors">npm</a>
-          <a href="https://github.com/your-org/loading-games" class="hover:text-gray-300 transition-colors">GitHub</a>
+    <footer class="py-10">
+      <div class="mx-auto max-w-7xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm" style="color:#8b949e">
+        <div class="flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#2f81f7" stroke="#2f81f7" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span style="font-weight:600;color:#e6edf3">loading-games</span>
+          <span>· MIT License</span>
+        </div>
+        <div class="flex items-center gap-5">
+          <a href="https://npmjs.com/package/loading-games" style="color:#8b949e;text-decoration:none" onmouseover="this.style.color='#2f81f7'" onmouseout="this.style.color='#8b949e'">npm</a>
+          <a href="https://github.com/Danishkhan1811/LoadingGame" style="color:#8b949e;text-decoration:none" onmouseover="this.style.color='#2f81f7'" onmouseout="this.style.color='#8b949e'">GitHub</a>
+          <a href="/docs" style="color:#8b949e;text-decoration:none" onmouseover="this.style.color='#2f81f7'" onmouseout="this.style.color='#8b949e'">Documentation</a>
         </div>
       </div>
     </footer>

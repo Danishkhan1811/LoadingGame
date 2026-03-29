@@ -54,6 +54,7 @@ export class GameController {
   private delayController: DelayController | null = null
   private _gameStartTime = 0
   private _currentScore = 0
+  private _recordShownThisGame = false
 
   private boundVisibilityChange: () => void
 
@@ -154,6 +155,7 @@ export class GameController {
       this.setState('playing')
       this._gameStartTime = Date.now()
       this._currentScore = 0
+      this._recordShownThisGame = false
       this.currentGame.start()
 
       this.showToast('Loading in the background — play while you wait!')
@@ -364,7 +366,10 @@ export class GameController {
 
     this.callbacks.onScore({ game, current: score, personalBest: Math.max(score, personalBest), isNewRecord })
 
-    if (isNewRecord) this.showNewRecordBadge()
+    if (isNewRecord && !this._recordShownThisGame) {
+      this._recordShownThisGame = true
+      this.showNewRecordBadge()
+    }
   }
 
   private showNewRecordBadge(): void {

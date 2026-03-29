@@ -2,14 +2,142 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @layer base {
+  :root {
+    --bg:        #030712;
+    --surface:   #0d1117;
+    --surface-2: #161b22;
+    --border:    #30363d;
+    --text:      #e6edf3;
+    --text-muted:#8b949e;
+    --brand:     #2f81f7;
+    --electric:  #39d353;
+    --accent:    #bc8cff;
+  }
+
+  html { scroll-behavior: smooth; }
+
   body {
-    @apply bg-gray-950 text-gray-100 antialiased;
+    background-color: var(--bg);
+    color: var(--text);
+    @apply antialiased;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-14px); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.15; }
+    50%       { opacity: 0.35; }
+  }
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
   }
 }
 
 @layer components {
-  .code-block {
-    @apply bg-gray-900 rounded-lg p-4 text-sm font-mono overflow-x-auto border border-gray-800;
+
+  /* ── Cards ─────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    @apply rounded-2xl;
+  }
+  .card-hover {
+    @apply card transition-all duration-300 hover:-translate-y-1;
+    box-shadow: 0 0 0 0 transparent;
+  }
+  .card-hover:hover {
+    border-color: #2f81f7;
+    box-shadow: 0 0 0 1px #2f81f740, 0 8px 32px #2f81f720;
+  }
+
+  /* ── Buttons ────────────────────────────────── */
+  .btn-primary {
+    background: var(--brand);
+    color: #fff;
+    @apply px-6 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200;
+  }
+  .btn-primary:hover {
+    background: #388bfd;
+    box-shadow: 0 0 20px #2f81f750;
+    @apply -translate-y-px;
+  }
+  .btn-ghost {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    @apply px-6 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 hover:-translate-y-px;
+  }
+
+  /* ── Text ───────────────────────────────────── */
+  .gradient-text {
+    background: linear-gradient(135deg, #2f81f7 0%, #bc8cff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .electric-text {
+    color: var(--electric);
+  }
+
+  /* ── Glow blobs ─────────────────────────────── */
+  .glow-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  /* ── Code blocks ────────────────────────────── */
+  .ide-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    @apply rounded-xl overflow-hidden font-mono text-sm;
+  }
+  .ide-block .ide-bar {
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    @apply flex items-center gap-2 px-4 py-2.5 text-xs;
+    color: var(--text-muted);
+  }
+  .ide-block .ide-bar .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .ide-block pre {
+    @apply p-5 overflow-x-auto leading-relaxed;
+    margin: 0;
+  }
+
+  /* ── Sidebar nav ────────────────────────────── */
+  .sidebar-link {
+    @apply block px-3 py-2 rounded-lg text-sm transition-all duration-150;
+    color: var(--text-muted);
+  }
+  .sidebar-link:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+  .sidebar-link.active {
+    background: #2f81f715;
+    color: var(--brand);
+    border-left: 2px solid var(--brand);
+  }
+
+  /* ── Modal ──────────────────────────────────── */
+  .modal-backdrop {
+    @apply fixed inset-0 z-50 flex items-center justify-center;
+    background: rgba(3, 7, 18, 0.85);
+    backdrop-filter: blur(8px);
+  }
+  .modal-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    @apply rounded-2xl shadow-2xl w-full max-w-2xl mx-4 overflow-hidden;
   }
 }
