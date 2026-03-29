@@ -98,6 +98,16 @@ export class GameController {
     }
   }
 
+  /** Immediately tear down on error — no animation, no delay. */
+  errorDeactivate(): void {
+    this.delayController?.destroy()
+    this.delayController = null
+    this.currentGame?.destroy()
+    this.currentGame = null
+    this.teardownDOM()
+    this.setState('idle')
+  }
+
   updateOptions(options: LoadingGameOptions): void {
     this.options = { ...this.options, ...options }
   }
@@ -135,7 +145,10 @@ export class GameController {
         return
       }
 
-      this.currentGame = new GameClass((score: number) => this.handleScoreUpdate(score, resolvedName))
+      this.currentGame = new GameClass(
+        (score: number) => this.handleScoreUpdate(score, resolvedName),
+        () => this.handleGameOverEvent(resolvedName),
+      )
       await this.currentGame.init(this.canvas!, this.options.theme ?? {})
 
       this.setState('playing')
@@ -329,6 +342,17 @@ export class GameController {
 
   // ─── Score Handling ───────────────────────────────────────────────────────────
 
+  private handleGameOverEvent(game: Exclude<GameName, 'random'>): void {
+    const duration = Date.now() - this._gameStartTime
+    const personalBest = getPersonalBest(game, this.options.namespace)
+    this.callbacks.onGameOver({
+      game,
+      finalScore: this._currentScore,
+      duration,
+      isNewRecord: this._currentScore > personalBest,
+    })
+  }
+
   private handleScoreUpdate(score: number, game: Exclude<GameName, 'random'>): void {
     this._currentScore = score
     const personalBest = getPersonalBest(game, this.options.namespace)
@@ -375,7 +399,7 @@ export class GameController {
 
   // ─── Dynamic Imports ──────────────────────────────────────────────────────────
 
-  private async loadGameChunk(name: Exclude<GameName, 'random'>): Promise<new (onScore?: (s: number) => void) => GamePlugin> {
+  private async loadGameChunk(name: Exclude<GameName, 'random'>): Promise<new (onScore?: (s: number) => void, onGameOver?: () => void) => GamePlugin> {
     switch (name) {
       case 'snake':
         return (await import('./games/snake/index.js')).SnakeGame

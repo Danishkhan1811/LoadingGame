@@ -18,7 +18,7 @@ export class BrickBreakerGame implements GamePlugin {
   private running = false
   private score = 0
 
-  constructor(private onScore?: (s: number) => void) {}
+  constructor(private onScore?: (s: number) => void, private _onGameOver?: () => void) {}
 
   init(canvas: HTMLCanvasElement, theme: ThemeObject): void {
     this.canvas = canvas

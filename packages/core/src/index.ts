@@ -26,6 +26,8 @@ export type {
 export { resolveTheme, applyThemeToElement } from './theme.js'
 export { getPersonalBest, saveScore, getAllScores, clearScores } from './scores.js'
 export { DelayController } from './delay.js'
+export { Dpad } from './dpad.js'
+export type { DpadDirection, DpadOptions } from './dpad.js'
 
 // Auto-register custom element
 import { LoadingGameElement } from './component.js'

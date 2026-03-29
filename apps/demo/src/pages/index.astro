@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro'
+import CodeTabs from '../components/CodeTabs'
+import GamePreview from '../components/GamePreview'
+---
+
+<Layout title="loading-games — Playable mini-games for loading states">
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="mx-auto max-w-6xl px-4 py-20 lg:py-28">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-full bg-brand-500/10 border border-brand-500/20 px-3 py-1 text-sm text-brand-400 mb-6">
+            <span>⚡</span>
+            <span>v1.0 — Open Source</span>
+          </div>
+          <h1 class="text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
+            Turn loading spinners into
+            <span class="text-brand-400"> playable games</span>
+          </h1>
+          <p class="mt-4 text-lg text-gray-400 leading-relaxed">
+            A zero-dependency JavaScript library that replaces boring loading states with engaging mini-games. Users play while they wait — and never abandon.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="/configurator" class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 font-medium text-white hover:bg-brand-500 transition-colors">
+              Try Configurator →
+            </a>
+            <div class="flex items-center gap-2 rounded-lg bg-gray-800/50 border border-gray-700 px-4 py-2.5 font-mono text-sm text-gray-300">
+              <span>npm install loading-games</span>
+              <button
+                onclick="navigator.clipboard.writeText('npm install loading-games')"
+                class="text-gray-500 hover:text-white transition-colors"
+                title="Copy"
+              >📋</button>
+            </div>
+          </div>
+        </div>
+        <div class="relative h-[320px] rounded-xl border border-gray-800 bg-gray-900 overflow-hidden shadow-2xl shadow-brand-500/5">
+          <GamePreview client:load game="snake" active={true} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="border-t border-gray-800 bg-gray-900/30">
+    <div class="mx-auto max-w-6xl px-4 py-16">
+      <h2 class="text-2xl font-bold text-center mb-10">Why loading-games?</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="rounded-lg border border-gray-800 bg-gray-900/50 p-5">
+          <div class="text-2xl mb-3">🪶</div>
+          <h3 class="font-semibold mb-1">Zero Dependencies</h3>
+          <p class="text-sm text-gray-400">Pure Web Component. No runtime deps. Works everywhere.</p>
+        </div>
+        <div class="rounded-lg border border-gray-800 bg-gray-900/50 p-5">
+          <div class="text-2xl mb-3">📦</div>
+          <h3 class="font-semibold mb-1">&lt;10 kB per Game</h3>
+          <p class="text-sm text-gray-400">Games lazy-load on first use. Core is under 8 kB gzipped.</p>
+        </div>
+        <div class="rounded-lg border border-gray-800 bg-gray-900/50 p-5">
+          <div class="text-2xl mb-3">🎮</div>
+          <h3 class="font-semibold mb-1">8 Games</h3>
+          <p class="text-sm text-gray-400">Snake, Flappy Bird, Memory Cards, Whack-a-Mole, and more.</p>
+        </div>
+        <div class="rounded-lg border border-gray-800 bg-gray-900/50 p-5">
+          <div class="text-2xl mb-3">🔌</div>
+          <h3 class="font-semibold mb-1">Framework Agnostic</h3>
+          <p class="text-sm text-gray-400">First-class React, Vue 3, and Svelte wrappers included.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code Tabs -->
+  <section class="border-t border-gray-800">
+    <div class="mx-auto max-w-6xl px-4 py-16">
+      <h2 class="text-2xl font-bold text-center mb-2">Get started in seconds</h2>
+      <p class="text-gray-400 text-center mb-8">One component. Any framework. Full TypeScript support.</p>
+      <CodeTabs client:load />
+    </div>
+  </section>
+
+  <!-- Games Preview -->
+  <section class="border-t border-gray-800 bg-gray-900/30">
+    <div class="mx-auto max-w-6xl px-4 py-16">
+      <h2 class="text-2xl font-bold text-center mb-2">Available Games</h2>
+      <p class="text-gray-400 text-center mb-8">Each game is a separate chunk — only loaded when needed.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {['snake', 'flappy', 'memory-cards', 'whack-a-mole', 'brick-breaker', '2048', 'wordle-lite', 'asteroids'].map((game) => (
+          <a href="/games" class="group rounded-lg border border-gray-800 bg-gray-900/50 p-4 text-center hover:border-brand-500/50 transition-colors">
+            <div class="text-3xl mb-2">
+              {game === 'snake' ? '🐍' : game === 'flappy' ? '🐦' : game === 'memory-cards' ? '🃏' : game === 'whack-a-mole' ? '🔨' : game === 'brick-breaker' ? '🧱' : game === '2048' ? '🔢' : game === 'wordle-lite' ? '📝' : '🚀'}
+            </div>
+            <div class="text-sm font-medium group-hover:text-brand-400 transition-colors">{game}</div>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-8">
+        <a href="/games" class="inline-flex items-center gap-2 text-brand-400 hover:text-brand-300 font-medium transition-colors">
+          Play all games →
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

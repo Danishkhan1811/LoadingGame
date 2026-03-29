@@ -13,6 +13,21 @@ import type { ThemeObject } from '../types.js'
 // Register web component
 import '../index.js'
 
+// Composable for programmatic control
+export { useLoadingGame } from './composable.js'
+export type { UseLoadingGameOptions, UseLoadingGameReturn } from './composable.js'
+
+// Re-export types for convenience
+export type {
+  GameName,
+  GameSize,
+  ExitAnimation,
+  ThemeObject,
+  LoadingGameOptions,
+  Score,
+  GameResult,
+} from '../types.js'
+
 export const LoadingGame = defineComponent({
   name: 'LoadingGame',
   props: {

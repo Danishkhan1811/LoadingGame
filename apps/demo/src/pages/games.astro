@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro'
+import GamePreview from '../components/GamePreview'
+
+const games = [
+  { name: 'snake', emoji: '🐍', description: 'Arrow keys / swipe to move. Eat food, grow longer.', bundle: '~4 kB' },
+  { name: 'flappy', emoji: '🐦', description: 'Space / tap to flap. Dodge the pipes.', bundle: '~5 kB' },
+  { name: 'memory-cards', emoji: '🃏', description: 'Click / tap to flip. Match all pairs.', bundle: '~4 kB' },
+  { name: 'whack-a-mole', emoji: '🔨', description: 'Click / tap moles. 20-second rounds.', bundle: '~4 kB' },
+  { name: 'brick-breaker', emoji: '🧱', description: 'Mouse / touch to control paddle.', bundle: '~6 kB' },
+  { name: '2048', emoji: '🔢', description: 'Arrow keys / swipe to merge tiles.', bundle: '~5 kB' },
+  { name: 'wordle-lite', emoji: '📝', description: 'Guess the 5-letter word in 6 tries.', bundle: '~7 kB' },
+  { name: 'asteroids', emoji: '🚀', description: 'Arrow keys + space to shoot.', bundle: '~8 kB' },
+]
+---
+
+<Layout title="Games — loading-games">
+  <div class="mx-auto max-w-6xl px-4 py-12">
+    <h1 class="text-3xl font-bold mb-2">All Games</h1>
+    <p class="text-gray-400 mb-10">Click any game to play it full-size. Each game is a separate lazy-loaded chunk.</p>
+
+    <div class="grid sm:grid-cols-2 gap-6">
+      {games.map((g) => (
+        <div class="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden group">
+          <div class="relative h-[280px] bg-gray-950">
+            <GamePreview client:visible game={g.name} active={true} size="full" />
+          </div>
+          <div class="p-4 border-t border-gray-800">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-xl">{g.emoji}</span>
+                <h2 class="font-semibold text-lg">{g.name}</h2>
+              </div>
+              <span class="text-xs text-gray-500 bg-gray-800 px-2 py-0.5 rounded">{g.bundle}</span>
+            </div>
+            <p class="text-sm text-gray-400 mt-1">{g.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>

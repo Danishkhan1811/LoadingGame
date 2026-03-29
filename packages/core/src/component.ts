@@ -42,7 +42,10 @@ export class LoadingGameElement extends HTMLElement {
       onScore: (score) => this.dispatchEvent(new CustomEvent('lg:score', { detail: score, bubbles: true })),
       onGameOver: (result) => this.dispatchEvent(new CustomEvent('lg:gameover', { detail: result, bubbles: true })),
       onComplete: () => this.dispatchEvent(new CustomEvent('lg:complete', { bubbles: true })),
-      onError: (err) => this.dispatchEvent(new CustomEvent('lg:error', { detail: err, bubbles: true })),
+      onError: (err) => {
+        this.controller?.errorDeactivate()
+        this.dispatchEvent(new CustomEvent('lg:error', { detail: err, bubbles: true }))
+      },
     })
 
     if (this.getAttribute('active') === 'true') {

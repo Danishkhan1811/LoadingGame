@@ -41,6 +41,13 @@ jobs:
       - name: Bundle size check
         run: pnpm size-limit
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+        working-directory: packages/core
+
+      - name: E2E tests
+        run: pnpm --filter loading-games test:e2e
+
       - name: Upload coverage
         uses: codecov/codecov-action@v4
         if: always()

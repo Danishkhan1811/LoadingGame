@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="Docs — loading-games">
+  <div class="mx-auto max-w-6xl px-4 py-12">
+    <div class="grid lg:grid-cols-[220px_1fr] gap-10">
+      <!-- Sidebar -->
+      <nav class="hidden lg:block sticky top-20 self-start">
+        <ul class="space-y-1 text-sm">
+          <li><a href="#installation" class="block px-3 py-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Installation</a></li>
+          <li><a href="#quick-start" class="block px-3 py-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Quick Start</a></li>
+          <li><a href="#configuration" class="block px-3 py-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Configuration</a></li>
+          <li><a href="#theming" class="block px-3 py-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Theming</a></li>
+          <li><a href="#games" class="block px-3 py-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Games</a></li>
+          <li><a href="#events" class="block px-3 py-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Events</a></li>
+          <li><a href="#accessibility" class="block px-3 py-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Accessibility</a></li>
+          <li><a href="#cli" class="block px-3 py-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">CLI Tool</a></li>
+        </ul>
+      </nav>
+
+      <!-- Content -->
+      <article class="prose prose-invert max-w-none">
+        <h1>Documentation</h1>
+
+        <section id="installation">
+          <h2>Installation</h2>
+          <pre class="code-block"><code>npm install loading-games
+# or
+pnpm add loading-games
+# or
+yarn add loading-games</code></pre>
+          <p class="text-gray-400">Or use the CLI to auto-detect your framework:</p>
+          <pre class="code-block"><code>npx loading-games init</code></pre>
+        </section>
+
+        <section id="quick-start" class="mt-12">
+          <h2>Quick Start</h2>
+          <h3>React</h3>
+          <pre class="code-block"><code>{`import { LoadingGame } from 'loading-games/react'
+
+function MyPage() {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchData().then(() => setLoading(false))
+  }, [])
+
+  return <LoadingGame game="snake" active={loading} />
+}`}</code></pre>
+
+          <h3>Vue 3</h3>
+          <pre class="code-block"><code>{`<script setup>
+import { LoadingGame } from 'loading-games/vue'
+import { ref } from 'vue'
+
+const loading = ref(true)
+fetch('/api/data').then(() => loading.value = false)
+</script>
+
+<template>
+  <LoadingGame game="snake" :active="loading" />
+</template>`}</code></pre>
+
+          <h3>Vanilla / Web Component</h3>
+          <pre class="code-block"><code>{`import 'loading-games'
+
+const el = document.querySelector('loading-game')
+el.setAttribute('active', 'true')
+
+// When loading completes:
+el.removeAttribute('active')`}</code></pre>
+        </section>
+
+        <section id="configuration" class="mt-12">
+          <h2>Configuration</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-700">
+                  <th class="text-left py-2 pr-4 font-medium text-gray-300">Prop</th>
+                  <th class="text-left py-2 pr-4 font-medium text-gray-300">Type</th>
+                  <th class="text-left py-2 pr-4 font-medium text-gray-300">Default</th>
+                  <th class="text-left py-2 font-medium text-gray-300">Description</th>
+                </tr>
+              </thead>
+              <tbody class="text-gray-400">
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>game</code></td><td class="pr-4"><code>GameName | 'random'</code></td><td class="pr-4"><code>'random'</code></td><td>Which game to render</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>active</code></td><td class="pr-4"><code>boolean</code></td><td class="pr-4"><code>false</code></td><td>Starts/stops the game</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>theme</code></td><td class="pr-4"><code>ThemeObject</code></td><td class="pr-4">auto</td><td>Colors: primary, background, surface, text, accent</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>size</code></td><td class="pr-4"><code>'sm'|'md'|'lg'|'full'</code></td><td class="pr-4"><code>'md'</code></td><td>Preset canvas size</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>delay</code></td><td class="pr-4"><code>number</code> (ms)</td><td class="pr-4"><code>800</code></td><td>Wait before showing game</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>minDisplay</code></td><td class="pr-4"><code>number</code> (ms)</td><td class="pr-4"><code>0</code></td><td>Minimum display time once shown</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>exitAnimation</code></td><td class="pr-4"><code>'fade'|'slide'|'none'</code></td><td class="pr-4"><code>'fade'</code></td><td>How the game disappears</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>saveScores</code></td><td class="pr-4"><code>boolean</code></td><td class="pr-4"><code>true</code></td><td>Persist personal bests in localStorage</td></tr>
+                <tr><td class="py-2 pr-4"><code>namespace</code></td><td class="pr-4"><code>string</code></td><td class="pr-4"><code>undefined</code></td><td>Scope score storage per instance</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="theming" class="mt-12">
+          <h2>Theming</h2>
+          <p class="text-gray-400">Theme resolution priority (highest first):</p>
+          <ol class="text-gray-400 list-decimal list-inside space-y-1">
+            <li>Explicit <code>theme</code> prop/attribute</li>
+            <li>CSS variables: <code>--lg-primary</code>, <code>--lg-background</code>, <code>--lg-surface</code>, <code>--lg-text</code>, <code>--lg-accent</code></li>
+            <li>System <code>prefers-color-scheme</code> detection</li>
+          </ol>
+          <pre class="code-block mt-4"><code>{`:root {
+  --lg-primary: #6366F1;
+  --lg-background: #0F0F0F;
+  --lg-surface: #1A1A2E;
+  --lg-text: #FFFFFF;
+  --lg-accent: #E94560;
+}`}</code></pre>
+        </section>
+
+        <section id="games" class="mt-12">
+          <h2>Available Games</h2>
+          <p class="text-gray-400">All games are lazy-loaded as separate chunks. Use <code>game="random"</code> to pick one at random.</p>
+          <div class="grid sm:grid-cols-2 gap-3 mt-4 not-prose">
+            {[
+              { name: 'snake', size: '~4 kB', controls: 'Arrow keys / swipe / D-pad' },
+              { name: 'flappy', size: '~5 kB', controls: 'Space / tap' },
+              { name: 'memory-cards', size: '~4 kB', controls: 'Click / tap / keyboard' },
+              { name: 'whack-a-mole', size: '~4 kB', controls: 'Click / tap / keys 1-9' },
+              { name: 'brick-breaker', size: '~6 kB', controls: 'Mouse / touch' },
+              { name: '2048', size: '~5 kB', controls: 'Arrow keys / swipe' },
+              { name: 'wordle-lite', size: '~7 kB', controls: 'Keyboard' },
+              { name: 'asteroids', size: '~8 kB', controls: 'Arrow keys + space' },
+            ].map((g) => (
+              <div class="rounded border border-gray-800 p-3">
+                <div class="flex items-center justify-between">
+                  <code class="text-brand-400 text-sm">{g.name}</code>
+                  <span class="text-xs text-gray-500">{g.size}</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">{g.controls}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="events" class="mt-12">
+          <h2>Events</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-700">
+                  <th class="text-left py-2 pr-4 font-medium text-gray-300">Event</th>
+                  <th class="text-left py-2 pr-4 font-medium text-gray-300">Detail</th>
+                  <th class="text-left py-2 font-medium text-gray-300">Description</th>
+                </tr>
+              </thead>
+              <tbody class="text-gray-400">
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>lg:score</code></td><td class="pr-4"><code>Score</code></td><td>Fires on every score change</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>lg:gameover</code></td><td class="pr-4"><code>GameResult</code></td><td>Fires when a game round ends</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2 pr-4"><code>lg:complete</code></td><td class="pr-4">—</td><td>Fires when exit animation finishes</td></tr>
+                <tr><td class="py-2 pr-4"><code>lg:error</code></td><td class="pr-4"><code>Error</code></td><td>Fires on loading/runtime error</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="accessibility" class="mt-12">
+          <h2>Accessibility</h2>
+          <ul class="text-gray-400 space-y-1">
+            <li><code>role="application"</code> + game-specific <code>aria-label</code> on every canvas</li>
+            <li>Skip link: "Skip game, wait for loading" — always first tab stop</li>
+            <li><code>prefers-reduced-motion</code>: static fallback, no gameplay</li>
+            <li>Auto-pause when tab is hidden (<code>visibilitychange</code>)</li>
+            <li>Virtual D-pad on touch devices for keyboard-dependent games</li>
+            <li>Min 44×44px tap targets (WCAG 2.5.5 AAA)</li>
+          </ul>
+        </section>
+
+        <section id="cli" class="mt-12">
+          <h2>CLI Tool</h2>
+          <pre class="code-block"><code>npx loading-games init          # auto-detect & install
+npx loading-games init --dry-run # preview without installing</code></pre>
+          <p class="text-gray-400">The CLI detects your framework from <code>package.json</code> dependencies and config files (<code>next.config.*</code>, <code>nuxt.config.*</code>, <code>svelte.config.*</code>, <code>angular.json</code>), then prints a framework-specific code snippet.</p>
+        </section>
+      </article>
+    </div>
+  </div>
+</Layout>

@@ -31,25 +31,40 @@ import { LoadingGame } from 'loading-games/react'
 
 ### Vanilla JS / Web Component
 ```html
-<loading-game game="flappy" active="true" theme-primary="#E94560"></loading-game>
+<loading-game game="flappy" active="true"></loading-game>
 ```
 
 ```js
-// Or imperatively:
+import 'loading-games'
+
 const game = document.querySelector('loading-game')
-game.start()
-game.stop()
-game.setTheme({...})
+game.setAttribute('active', 'true')  // start
+game.removeAttribute('active')       // stop
+game.theme = { primary: '#E94560', background: '#0F0F0F' }
 ```
 
-### Vue
+### Vue 3
 ```vue
-<LoadingGame game="2048" :active="isLoading" />
+<script setup>
+import { LoadingGame } from 'loading-games/vue'
+import { ref } from 'vue'
+const isLoading = ref(true)
+</script>
+
+<template>
+  <LoadingGame game="snake" :active="isLoading" @complete="isLoading = false" />
+</template>
 ```
 
 ### Svelte
 ```svelte
-<LoadingGame game="asteroids" active={isLoading} />
+<script>
+  import 'loading-games'
+  let active = true
+</script>
+
+<loading-game game="snake" active={active ? 'true' : undefined}
+  on:lg:complete={() => active = false} />
 ```
 
 ---
@@ -73,16 +88,16 @@ npx loading-games init
 
 ## Games (v1.0)
 
-| Game | Controls | Bundle | Notes |
-|------|----------|--------|-------|
-| `snake` | Arrow keys / swipe | ~4 kB | Wrapping walls variant |
-| `brick-breaker` | Mouse / touch drag | ~6 kB | Random power-ups |
-| `flappy` | Spacebar / tap | ~5 kB | Infinite runner |
-| `2048` | Arrow keys / swipe | ~5 kB | Auto-saves state |
-| `wordle-lite` | Keyboard / virtual kb | ~7 kB | New word daily |
-| `asteroids` | Arrow keys + space | ~8 kB | Canvas particles |
-| `memory-cards` | Mouse / tap | ~4 kB | 4×4 emoji grid |
-| `whack-a-mole` | Mouse / tap | ~4 kB | 20-second rounds |
+| Game | Controls | Bundle | Status |
+|------|----------|--------|--------|
+| `snake` | Arrow keys / swipe / D-pad | ~4 kB | ✅ Complete |
+| `flappy` | Spacebar / tap | ~5 kB | ✅ Complete |
+| `memory-cards` | Mouse / tap / keyboard | ~4 kB | ✅ Complete |
+| `whack-a-mole` | Mouse / tap / keys 1-9 | ~4 kB | ✅ Complete |
+| `brick-breaker` | Mouse / touch drag | ~6 kB | 🔲 Stub (v1.1) |
+| `2048` | Arrow keys / swipe | ~5 kB | 🔲 Stub (v1.1) |
+| `wordle-lite` | Keyboard / virtual kb | ~7 kB | 🔲 Stub (v1.1) |
+| `asteroids` | Arrow keys + space | ~8 kB | 🔲 Stub (v1.1) |
 
 ---
 
@@ -102,6 +117,7 @@ npx loading-games init
 | `onScore` | `(score: Score) => void` | — | Fires on every score change |
 | `onGameOver` | `(result: Result) => void` | — | Fires when a game round ends |
 | `onError` | `(err: Error) => void` | — | Fires on loading error; exits game immediately |
+| `onComplete` | `() => void` | — | Fires when exit animation finishes (game fully removed) |
 
 ---
 

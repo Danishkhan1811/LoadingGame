@@ -18,7 +18,7 @@ export class Game2048 implements GamePlugin {
   private running = false
   private score = 0
 
-  constructor(private _onScore?: (s: number) => void) {}
+  constructor(private _onScore?: (s: number) => void, private _onGameOver?: () => void) {}
 
   init(canvas: HTMLCanvasElement, theme: ThemeObject): void {
     this.canvas = canvas

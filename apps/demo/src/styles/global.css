@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-950 text-gray-100 antialiased;
+  }
+}
+
+@layer components {
+  .code-block {
+    @apply bg-gray-900 rounded-lg p-4 text-sm font-mono overflow-x-auto border border-gray-800;
+  }
+}

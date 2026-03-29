@@ -56,7 +56,12 @@ export class FlappyGame implements GamePlugin {
   private boundKey: (e: KeyboardEvent) => void
   private boundTouch: () => void
 
-  constructor(private onScore?: (score: number) => void) {
+  private onScore?: (score: number) => void
+  private onGameOver?: () => void
+
+  constructor(onScore?: (score: number) => void, onGameOver?: () => void) {
+    this.onScore = onScore
+    this.onGameOver = onGameOver
     this.boundJump = this.jump.bind(this)
     this.boundKey = (e: KeyboardEvent) => { if (e.code === 'Space') { e.preventDefault(); this.jump() } }
     this.boundTouch = this.jump.bind(this)
@@ -178,6 +183,7 @@ export class FlappyGame implements GamePlugin {
   private die(): void {
     this.dead = true
     this.birdVY = JUMP_VELOCITY * 0.5
+    this.onGameOver?.()
   }
 
   private render(): void {

@@ -52,7 +52,12 @@ export class WhackAMoleGame implements GamePlugin {
   private boundTouch: (e: TouchEvent) => void
   private boundKeyDown: (e: KeyboardEvent) => void
 
-  constructor(private onScore?: (s: number) => void) {
+  private onScore?: (s: number) => void
+  private onGameOver?: () => void
+
+  constructor(onScore?: (s: number) => void, onGameOver?: () => void) {
+    this.onScore = onScore
+    this.onGameOver = onGameOver
     this.boundClick = this.onClick.bind(this)
     this.boundTouch = this.onTouch.bind(this)
     this.boundKeyDown = this.onKeyDown.bind(this)
@@ -192,7 +197,7 @@ export class WhackAMoleGame implements GamePlugin {
     if (this.roundOver) return
 
     this.timeLeft = Math.max(0, ROUND_DURATION - (now - this.roundStart))
-    if (this.timeLeft === 0) { this.roundOver = true; return }
+    if (this.timeLeft === 0) { this.roundOver = true; this.onGameOver?.(); return }
 
     // RAF-based spawner (replaces setInterval)
     this.trySpawnMole(now)

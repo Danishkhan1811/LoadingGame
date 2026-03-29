@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string
+  description?: string
+}
+
+const { title, description = 'Playable mini-games that replace loading spinners. Zero-dependency, <10kB per game, works with React, Vue, Svelte, or vanilla JS.' } = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <nav class="sticky top-0 z-50 border-b border-gray-800 bg-gray-950/80 backdrop-blur-sm">
+      <div class="mx-auto max-w-6xl flex items-center justify-between px-4 h-14">
+        <a href="/" class="flex items-center gap-2 font-bold text-lg">
+          <span class="text-2xl">⚡</span>
+          <span>loading-games</span>
+        </a>
+        <div class="flex items-center gap-6 text-sm text-gray-400">
+          <a href="/games" class="hover:text-white transition-colors">Games</a>
+          <a href="/configurator" class="hover:text-white transition-colors">Configurator</a>
+          <a href="/docs" class="hover:text-white transition-colors">Docs</a>
+          <a
+            href="https://github.com/Danishkhan1811/LoadingGame"
+            target="_blank"
+            rel="noopener"
+            class="hover:text-white transition-colors"
+          >
+            GitHub
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="border-t border-gray-800 py-8 text-center text-sm text-gray-500">
+      <div class="mx-auto max-w-6xl px-4">
+        <p>MIT License &middot; Made with ❤️ for better loading UX</p>
+        <div class="mt-2 flex items-center justify-center gap-4">
+          <a href="https://npmjs.com/package/loading-games" class="hover:text-gray-300 transition-colors">npm</a>
+          <a href="https://github.com/your-org/loading-games" class="hover:text-gray-300 transition-colors">GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

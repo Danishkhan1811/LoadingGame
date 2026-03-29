@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loading Game E2E Test Fixture</title>
+  <style>
+    body { margin: 0; padding: 24px; background: #111; color: #fff; font-family: system-ui; }
+    #container { width: 400px; height: 320px; }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <loading-game id="game" game="snake" size="md"></loading-game>
+  </div>
+  <script type="module">
+    import '../../dist/index.js'
+  </script>
+</body>
+</html>

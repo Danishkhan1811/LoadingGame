@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * loading-games CLI
- * Usage: npx loading-games init
+ * Usage: npx loading-games init [--dry-run]
  *
  * Detects the current framework and prints the exact integration snippet.
  */
@@ -9,28 +9,67 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { execSync } from 'node:child_process'
+import { reactSnippet } from './templates/react.js'
+import { vueSnippet } from './templates/vue.js'
+import { svelteSnippet } from './templates/svelte.js'
+import { vanillaSnippet } from './templates/vanilla.js'
 
 const RESET = '\x1b[0m'
 const BOLD = '\x1b[1m'
 const GREEN = '\x1b[32m'
 const CYAN = '\x1b[36m'
 const DIM = '\x1b[2m'
+const YELLOW = '\x1b[33m'
 
-const [, , command = 'init'] = process.argv
+const args = process.argv.slice(2)
+const command = args.find(a => !a.startsWith('-')) ?? 'init'
+const dryRun = args.includes('--dry-run')
 
 if (command !== 'init') {
-  console.error(`Unknown command: ${command}. Usage: npx loading-games init`)
+  console.error(`Unknown command: ${command}. Usage: npx loading-games init [--dry-run]`)
   process.exit(1)
 }
 
-// ─── Framework Detection ────────────────────────────────────────────────────
+// ─── Framework Detection ─────────────────────────────────────────────────────────
 
 type Framework = 'react' | 'vue' | 'svelte' | 'angular' | 'vanilla'
 
-function detectFramework(): Framework {
+interface DetectionResult {
+  framework: Framework
+  configFile?: string
+}
+
+const CONFIG_FILES: Record<string, Framework> = {
+  'next.config.js': 'react',
+  'next.config.ts': 'react',
+  'next.config.mjs': 'react',
+  'nuxt.config.js': 'vue',
+  'nuxt.config.ts': 'vue',
+  'svelte.config.js': 'svelte',
+  'svelte.config.ts': 'svelte',
+  'vite.config.ts': 'vanilla', // might be React/Vue/Svelte — deps take priority
+  'vite.config.js': 'vanilla',
+  'angular.json': 'angular',
+}
+
+function detectFramework(): DetectionResult {
+  const cwd = process.cwd()
+
+  // 1. Check config files first for extra info
+  let configFile: string | undefined
+  let configFramework: Framework | undefined
+  for (const [file, fw] of Object.entries(CONFIG_FILES)) {
+    if (fs.existsSync(path.resolve(cwd, file))) {
+      configFile = file
+      configFramework = fw
+      break
+    }
+  }
+
+  // 2. Check package.json deps (takes priority for framework detection)
   try {
-    const pkgPath = path.resolve(process.cwd(), 'package.json')
-    if (!fs.existsSync(pkgPath)) return 'vanilla'
+    const pkgPath = path.resolve(cwd, 'package.json')
+    if (!fs.existsSync(pkgPath)) return { framework: configFramework ?? 'vanilla', configFile }
 
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')) as {
       dependencies?: Record<string, string>
@@ -38,55 +77,30 @@ function detectFramework(): Framework {
     }
     const deps = { ...pkg.dependencies, ...pkg.devDependencies }
 
-    if ('svelte' in deps) return 'svelte'
-    if ('vue' in deps) return 'vue'
-    if ('@angular/core' in deps) return 'angular'
-    if ('react' in deps) return 'react'
+    if ('svelte' in deps) return { framework: 'svelte', configFile }
+    if ('vue' in deps || 'nuxt' in deps) return { framework: 'vue', configFile }
+    if ('@angular/core' in deps) return { framework: 'angular', configFile }
+    if ('react' in deps || 'next' in deps) return { framework: 'react', configFile }
   } catch {
     // ignore
   }
-  return 'vanilla'
+
+  return { framework: configFramework ?? 'vanilla', configFile }
 }
 
 function detectPackageManager(): 'pnpm' | 'yarn' | 'npm' {
-  if (fs.existsSync(path.resolve(process.cwd(), 'pnpm-lock.yaml'))) return 'pnpm'
-  if (fs.existsSync(path.resolve(process.cwd(), 'yarn.lock'))) return 'yarn'
+  const cwd = process.cwd()
+  if (fs.existsSync(path.resolve(cwd, 'pnpm-lock.yaml'))) return 'pnpm'
+  if (fs.existsSync(path.resolve(cwd, 'yarn.lock'))) return 'yarn'
   return 'npm'
 }
 
-// ─── Code Snippets ──────────────────────────────────────────────────────────
+// ─── Snippets Map ─────────────────────────────────────────────────────────────
 
 const snippets: Record<Framework, string> = {
-  react: `import { LoadingGame } from 'loading-games/react'
-
-// In your component:
-<LoadingGame
-  game="snake"
-  active={isLoading}
-  theme={{ primary: '#6366F1', background: '#0F0F0F' }}
-  onComplete={() => setShowResult(true)}
-/>`,
-
-  vue: `import { LoadingGame } from 'loading-games/vue'
-
-// In your template:
-<LoadingGame
-  game="snake"
-  :active="isLoading"
-  :theme="{ primary: '#6366F1', background: '#0F0F0F' }"
-  @complete="handleComplete"
-/>`,
-
-  svelte: `import { LoadingGame } from 'loading-games/svelte'
-
-// In your template:
-<LoadingGame
-  game="snake"
-  {active}
-  theme={{ primary: '#6366F1', background: '#0F0F0F' }}
-  on:complete={handleComplete}
-/>`,
-
+  react: reactSnippet,
+  vue: vueSnippet,
+  svelte: svelteSnippet,
   angular: `// Angular wrapper coming in v1.1.
 // For now, use the Web Component directly:
 // 1. Add CUSTOM_ELEMENTS_SCHEMA to your module
@@ -95,18 +109,8 @@ const snippets: Record<Framework, string> = {
 <loading-game
   game="snake"
   [attr.active]="isLoading ? 'true' : null"
-  theme-primary="#6366F1"
 ></loading-game>`,
-
-  vanilla: `import 'loading-games'
-
-// HTML:
-<loading-game game="snake" active="true" theme-primary="#6366F1"></loading-game>
-
-// Or imperatively:
-const game = document.querySelector('loading-game')
-game.setAttribute('active', 'true')  // start
-game.removeAttribute('active')       // stop`,
+  vanilla: vanillaSnippet,
 }
 
 // ─── Install ────────────────────────────────────────────────────────────────
@@ -116,6 +120,11 @@ function installPackage(pm: 'pnpm' | 'yarn' | 'npm'): void {
     pm === 'pnpm' ? 'pnpm add loading-games' :
     pm === 'yarn' ? 'yarn add loading-games' :
     'npm install loading-games'
+
+  if (dryRun) {
+    console.log(`\n${YELLOW}[dry-run]${RESET} Would run: ${DIM}${cmd}${RESET}`)
+    return
+  }
 
   console.log(`\n${DIM}Running: ${cmd}${RESET}`)
   try {
@@ -127,14 +136,17 @@ function installPackage(pm: 'pnpm' | 'yarn' | 'npm'): void {
   }
 }
 
-// ─── Main ───────────────────────────────────────────────────────────────────
+// ─── Main ─────────────────────────────────────────────────────────────────
 
-const framework = detectFramework()
+const { framework, configFile } = detectFramework()
 const pm = detectPackageManager()
 
-console.log(`\n${BOLD}\u26A1 loading-games init${RESET}`)
+console.log(`\n${BOLD}\u26A1 loading-games init${RESET}${dryRun ? ` ${YELLOW}(dry-run)${RESET}` : ''}`)
 console.log(`${DIM}\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500${RESET}`)
 console.log(`${GREEN}\u2713 Detected framework: ${BOLD}${framework}${RESET}`)
+if (configFile) {
+  console.log(`${GREEN}\u2713 Config file: ${BOLD}${configFile}${RESET}`)
+}
 console.log(`${GREEN}\u2713 Package manager: ${BOLD}${pm}${RESET}`)
 
 installPackage(pm)

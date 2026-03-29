@@ -32,7 +32,12 @@ export class MemoryCardsGame implements GamePlugin {
   private boundTouch: (e: TouchEvent) => void
   private boundKeyDown: (e: KeyboardEvent) => void
 
-  constructor(private onScore?: (s: number) => void) {
+  private onScore?: (s: number) => void
+  private onGameOver?: () => void
+
+  constructor(onScore?: (s: number) => void, onGameOver?: () => void) {
+    this.onScore = onScore
+    this.onGameOver = onGameOver
     this.boundClick = this.onClick.bind(this)
     this.boundTouch = this.onTouch.bind(this)
     this.boundKeyDown = this.onKeyDown.bind(this)
@@ -140,6 +145,7 @@ export class MemoryCardsGame implements GamePlugin {
           const elapsed = (Date.now() - this.startTime) / 1000
           const timeBonus = Math.max(0, Math.round((60 - elapsed) * 5))
           this.score += timeBonus; this.onScore?.(this.score)
+          this.onGameOver?.()
           setTimeout(() => this.reset(), 2000)
         }
       }, FLIP_MS + 100)

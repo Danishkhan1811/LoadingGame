@@ -11,6 +11,7 @@
 
 import type { GamePlugin, ThemeObject, ResolvedTheme } from '../../types.js'
 import { resolveTheme } from '../../theme.js'
+import { Dpad } from '../../dpad.js'
 
 type Direction = 'up' | 'down' | 'left' | 'right'
 type Point = { x: number; y: number }
@@ -18,8 +19,6 @@ type Point = { x: number; y: number }
 const GRID_SIZE = 20       // cells per row/column
 const BASE_TICK_MS = 150   // starting tick speed
 const SPEED_INCREASE = 5   // ms faster per 5 points
-const DPAD_SIZE = 44       // min touch target size per spec
-const DPAD_PAD = 12        // padding from canvas edge
 const SWIPE_THRESHOLD = 30 // minimum swipe distance (px)
 
 export class SnakeGame implements GamePlugin {
@@ -44,22 +43,20 @@ export class SnakeGame implements GamePlugin {
   private boundKeyDown: (e: KeyboardEvent) => void
   private boundTouchStart: (e: TouchEvent) => void
   private boundTouchEnd: (e: TouchEvent) => void
-  private boundDpadClick: (e: MouseEvent) => void
-  private boundDpadTouch: (e: TouchEvent) => void
   private touchStartX = 0
   private touchStartY = 0
   private isTouchDevice = false
-  private dpadOverlay: HTMLElement | null = null
+  private dpad: Dpad | null = null
 
   private onScoreCallback?: (score: number) => void
+  private onGameOverCallback?: () => void
 
-  constructor(onScore?: (score: number) => void) {
+  constructor(onScore?: (score: number) => void, onGameOver?: () => void) {
     this.onScoreCallback = onScore
+    this.onGameOverCallback = onGameOver
     this.boundKeyDown = this.handleKeyDown.bind(this)
     this.boundTouchStart = this.handleTouchStart.bind(this)
     this.boundTouchEnd = this.handleTouchEnd.bind(this)
-    this.boundDpadClick = this.handleDpadClick.bind(this)
-    this.boundDpadTouch = this.handleDpadTouch.bind(this)
   }
 
   init(canvas: HTMLCanvasElement, theme: ThemeObject): void {
@@ -116,7 +113,7 @@ export class SnakeGame implements GamePlugin {
     this.lastTick = performance.now()
     this.loop(performance.now())
     this.attachEventListeners()
-    if (this.isTouchDevice) this.createDpad()
+    if (this.isTouchDevice) this.mountDpad()
   }
 
   pause(): void {
@@ -138,7 +135,8 @@ export class SnakeGame implements GamePlugin {
   destroy(): void {
     this.pause()
     this.removeEventListeners()
-    this.removeDpad()
+    this.dpad?.destroy()
+    this.dpad = null
   }
 
   getScore(): number {
@@ -171,6 +169,7 @@ export class SnakeGame implements GamePlugin {
 
     // Collision with self
     if (this.snake.some(p => p.x === next.x && p.y === next.y)) {
+      this.onGameOverCallback?.()
       this.reset()
       return
     }
@@ -328,70 +327,23 @@ export class SnakeGame implements GamePlugin {
 
   // ─── Virtual D-pad ─────────────────────────────────────────────────────────
 
-  private createDpad(): void {
-    if (this.dpadOverlay) return
+  private mountDpad(): void {
     const parent = this.canvas.parentElement
     if (!parent) return
 
-    const overlay = document.createElement('div')
-    overlay.style.cssText = `position:absolute;bottom:${DPAD_PAD}px;left:50%;transform:translateX(-50%);display:grid;grid-template-columns:${DPAD_SIZE}px ${DPAD_SIZE}px ${DPAD_SIZE}px;grid-template-rows:${DPAD_SIZE}px ${DPAD_SIZE}px ${DPAD_SIZE}px;gap:2px;pointer-events:none;z-index:10;`
-
-    const dirs: (Direction | null)[] = [
-      null, 'up', null,
-      'left', null, 'right',
-      null, 'down', null,
-    ]
-    const arrows: Record<string, string> = { up: '\u25B2', down: '\u25BC', left: '\u25C0', right: '\u25B6' }
-
-    for (const dir of dirs) {
-      const btn = document.createElement('button')
-      if (dir) {
-        btn.textContent = arrows[dir]!
-        btn.setAttribute('aria-label', dir)
-        btn.dataset.dir = dir
-        btn.style.cssText = `pointer-events:auto;width:${DPAD_SIZE}px;height:${DPAD_SIZE}px;border:none;border-radius:8px;background:${this.theme.primary}55;color:${this.theme.text};font-size:16px;display:flex;align-items:center;justify-content:center;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent;`
-      } else {
-        btn.style.cssText = 'visibility:hidden;'
-      }
-      overlay.appendChild(btn)
-    }
-
-    // Ensure parent is positioned for absolute child
-    const pStyle = getComputedStyle(parent)
-    if (pStyle.position === 'static') parent.style.position = 'relative'
-
-    parent.appendChild(overlay)
-    this.dpadOverlay = overlay
-
-    overlay.addEventListener('click', this.boundDpadClick)
-    overlay.addEventListener('touchstart', this.boundDpadTouch, { passive: true })
-  }
-
-  private removeDpad(): void {
-    if (this.dpadOverlay) {
-      this.dpadOverlay.removeEventListener('click', this.boundDpadClick)
-      this.dpadOverlay.removeEventListener('touchstart', this.boundDpadTouch)
-      this.dpadOverlay.remove()
-      this.dpadOverlay = null
-    }
-  }
-
-  private handleDpadInput(dir: Direction): void {
-    const opposites: Record<Direction, Direction> = {
-      up: 'down', down: 'up', left: 'right', right: 'left',
-    }
-    if (opposites[dir] !== this.direction) {
-      this.nextDirection = dir
-    }
-  }
-
-  private handleDpadClick(e: MouseEvent): void {
-    const btn = (e.target as HTMLElement).closest('[data-dir]') as HTMLElement | null
-    if (btn?.dataset.dir) this.handleDpadInput(btn.dataset.dir as Direction)
-  }
-
-  private handleDpadTouch(e: TouchEvent): void {
-    const btn = (e.target as HTMLElement).closest('[data-dir]') as HTMLElement | null
-    if (btn?.dataset.dir) this.handleDpadInput(btn.dataset.dir as Direction)
+    this.dpad = new Dpad({
+      parent,
+      primaryColor: this.theme.primary,
+      textColor: this.theme.text,
+      onDirection: (dir) => {
+        const opposites: Record<Direction, Direction> = {
+          up: 'down', down: 'up', left: 'right', right: 'left',
+        }
+        if (opposites[dir] !== this.direction) {
+          this.nextDirection = dir
+        }
+      },
+    })
+    this.dpad.mount()
   }
 }
