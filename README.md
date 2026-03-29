@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/loading-games)](https://npmjs.com/package/loading-games)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/loading-games)](https://bundlephobia.com/package/loading-games)
-[![license](https://img.shields.io/github/license/your-org/loading-games)](./LICENSE)
+[![license](https://img.shields.io/github/license/DanishKhan1811/LoadingGame)](./LICENSE)
 
 ## Overview
 
