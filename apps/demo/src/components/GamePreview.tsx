@@ -34,11 +34,14 @@ export default function GamePreview({ game = 'snake', active = true, theme, size
 }
 
 declare global {
-  interface IntrinsicElements {
-    'loading-game': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-      game?: string
-      active?: string
-      size?: string
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'loading-game': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+        game?: string
+        active?: string
+        size?: string
+      }
     }
   }
 }
