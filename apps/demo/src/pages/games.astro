@@ -3,15 +3,17 @@ import Layout from '../layouts/Layout.astro'
 import GamePreview from '../components/GamePreview'
 
 const games = [
-  { name: 'snake', emoji: '🐍', description: 'Arrow keys / swipe to move. Eat food, grow longer.', bundle: '~4 kB' },
-  { name: 'flappy', emoji: '🐦', description: 'Space / tap to flap. Dodge the pipes.', bundle: '~5 kB' },
-  { name: 'memory-cards', emoji: '🃏', description: 'Click / tap to flip. Match all pairs.', bundle: '~4 kB' },
-  { name: 'whack-a-mole', emoji: '🔨', description: 'Click / tap moles. 20-second rounds.', bundle: '~4 kB' },
-  { name: 'brick-breaker', emoji: '🧱', description: 'Mouse / touch to control paddle.', bundle: '~6 kB' },
-  { name: '2048', emoji: '🔢', description: 'Arrow keys / swipe to merge tiles.', bundle: '~5 kB' },
-  { name: 'wordle-lite', emoji: '📝', description: 'Guess the 5-letter word in 6 tries.', bundle: '~7 kB' },
-  { name: 'asteroids', emoji: '🚀', description: 'Arrow keys + space to shoot.', bundle: '~8 kB' },
+  { name: 'snake', emoji: '🐍', description: 'Arrow keys / swipe to move. Eat food, grow longer.', bundle: '~3 kB' },
+  { name: 'flappy', emoji: '🐦', description: 'Space / tap to flap. Dodge the pipes.', bundle: '~2 kB' },
+  { name: 'memory-cards', emoji: '🃏', description: 'Click / tap to flip. Match all pairs.', bundle: '~2 kB' },
+  { name: 'whack-a-mole', emoji: '🔨', description: 'Click / tap moles. 20-second rounds.', bundle: '~2 kB' },
 ]
+
+// Coming in future releases:
+// { name: 'brick-breaker', emoji: '🧱', description: 'Mouse / touch to control paddle.', bundle: '~1 kB' },
+// { name: '2048', emoji: '🔢', description: 'Arrow keys / swipe to merge tiles.', bundle: '~1 kB' },
+// { name: 'wordle-lite', emoji: '📝', description: 'Guess the 5-letter word in 6 tries.', bundle: '~1 kB' },
+// { name: 'asteroids', emoji: '🚀', description: 'Arrow keys + space to shoot.', bundle: '~1 kB' },
 ---
 
 <Layout title="Games — loading-games">
