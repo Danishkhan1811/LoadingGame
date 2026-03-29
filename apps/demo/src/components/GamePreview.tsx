@@ -18,13 +18,13 @@ export default function GamePreview({ game = 'snake', active = true, theme, size
     const el = ref.current
     if (!el) return
     if (theme) {
-      ;(el as any).theme = theme
+      (el as HTMLElement & { theme: Record<string, string> }).theme = theme
     }
   }, [theme])
 
   return (
     <loading-game
-      ref={ref as any}
+      ref={ref as React.Ref<HTMLElement>}
       game={game}
       active={active ? 'true' : undefined}
       size={size}
@@ -34,9 +34,11 @@ export default function GamePreview({ game = 'snake', active = true, theme, size
 }
 
 declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'loading-game': any
+  interface IntrinsicElements {
+    'loading-game': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+      game?: string
+      active?: string
+      size?: string
     }
   }
 }

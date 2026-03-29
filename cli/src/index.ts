@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 /**
  * loading-games CLI
  * Usage: npx loading-games init [--dry-run]
