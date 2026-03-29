@@ -4,3 +4,10 @@ coverage/
 .turbo/
 *.tsbuildinfo
 .DS_Store
+
+# Windsurf-only documentation (local development guides)
+IMPLEMENTATION_PLAN.md
+LAUNCH_GUIDE.md
+SPEC.md
+MILESTONES.md
+STATUS.md

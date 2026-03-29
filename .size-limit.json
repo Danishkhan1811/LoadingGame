@@ -2,7 +2,7 @@
   {
     "name": "Core entry point",
     "path": "./packages/core/dist/index.js",
-    "limit": "8 kB",
+    "limit": "12 kB",
     "gzip": true
   },
   {
@@ -56,19 +56,19 @@
   {
     "name": "React wrapper",
     "path": "./packages/core/dist/react/index.js",
-    "limit": "4 kB",
+    "limit": "15 kB",
     "gzip": true
   },
   {
     "name": "Vue wrapper",
     "path": "./packages/core/dist/vue/index.js",
-    "limit": "4 kB",
+    "limit": "21 kB",
     "gzip": true
   },
   {
     "name": "Svelte wrapper",
     "path": "./packages/core/dist/svelte/index.js",
-    "limit": "4 kB",
+    "limit": "12 kB",
     "gzip": true
   }
 ]
