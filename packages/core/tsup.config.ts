@@ -42,7 +42,7 @@ export default defineConfig([
     splitting: false,
     sourcemap: true,
     clean: false,
-    external: ['react', 'react/jsx-runtime', /\.\.\//],
+    external: ['react', 'react/jsx-runtime', '../index.js'],
     minify: true,
   },
   // Vue wrapper
@@ -53,7 +53,7 @@ export default defineConfig([
     splitting: false,
     sourcemap: true,
     clean: false,
-    external: ['vue', /\.\.\//],
+    external: ['vue', '../index.js'],
     minify: true,
   },
   // Svelte wrapper
@@ -64,7 +64,7 @@ export default defineConfig([
     splitting: false,
     sourcemap: true,
     clean: false,
-    external: ['svelte', /\.\.\//],
+    external: ['svelte', '../index.js'],
     minify: true,
   },
 ])

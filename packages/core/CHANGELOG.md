@@ -1,5 +1,11 @@
 # loading-games
 
+## 2.0.0
+
+### Major Changes
+
+- Fix TypeScript types for React/Vue/Svelte wrappers
+
 ## 1.0.0
 
 ### Major Changes
