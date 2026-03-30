@@ -4,9 +4,14 @@ import ThemeConfigurator from '../components/ThemeConfigurator'
 ---
 
 <Layout title="Configurator — loading-games">
-  <div class="mx-auto max-w-6xl px-4 py-12">
-    <h1 class="text-3xl font-bold mb-2">Theme Configurator</h1>
-    <p class="text-gray-400 mb-10">Pick a game, customize colors, and copy the generated code snippet.</p>
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <div style="margin-bottom:40px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(123,0,255,0.1);border:1px solid rgba(123,0,255,0.25);border-radius:100px;padding:4px 14px;margin-bottom:16px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.08em;color:#9b30ff;text-transform:uppercase">Live Tool</span>
+      </div>
+      <h1 class="font-display" style="font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-0.02em">Theme Configurator</h1>
+      <p style="color:#B0B0C8;font-size:15px">Pick a game, customize colors, and copy the generated code snippet.</p>
+    </div>
     <ThemeConfigurator client:load />
   </div>
 </Layout>

@@ -65,7 +65,7 @@ npx loading-games init --dry-run  # preview without installing`
     <div class="grid lg:grid-cols-[220px_1fr] gap-12">
       <!-- Sidebar -->
       <nav class="hidden lg:block sticky self-start" style="top: 72px">
-        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#8b949e;padding:0 12px;margin-bottom:8px">Documentation</p>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6a6a8a;padding:0 12px;margin-bottom:8px">// Documentation</p>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px">
           <li><a href="#installation" class="sidebar-link">Installation</a></li>
           <li><a href="#quick-start" class="sidebar-link">Quick Start</a></li>
@@ -80,12 +80,12 @@ npx loading-games init --dry-run  # preview without installing`
 
       <!-- Content -->
       <article style="max-width:none;min-width:0">
-        <h1 style="font-size:2rem;font-weight:800;color:#e6edf3;margin-bottom:4px">Documentation</h1>
-        <p style="color:#8b949e;font-size:15px;margin-bottom:48px">Everything you need to integrate loading-games into your project.</p>
+        <h1 class="font-display" style="font-size:2.2rem;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:-0.02em">Documentation</h1>
+        <p style="color:#B0B0C8;font-size:15px;margin-bottom:48px">Everything you need to integrate loading-games into your project.</p>
 
         <!-- ── Installation ── -->
         <section id="installation" style="margin-bottom:48px">
-          <h2 style="font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #30363d">Installation</h2>
+          <h2 class="font-display" style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(123,0,255,0.15)">Installation</h2>
           <div class="ide-block" style="margin-bottom:12px">
             <div class="ide-bar">
               <span class="dot" style="background:#ff5f57"></span>
@@ -95,7 +95,7 @@ npx loading-games init --dry-run  # preview without installing`
             </div>
             <Code code={`npm install loading-games\n# or\npnpm add loading-games\n# or\nyarn add loading-games`} lang="bash" theme="github-dark" />
           </div>
-          <p style="font-size:14px;color:#8b949e;margin-bottom:10px">Or scaffold with the CLI (auto-detects your framework):</p>
+          <p style="font-size:14px;color:#B0B0C8;margin-bottom:10px">Or scaffold with the CLI (auto-detects your framework):</p>
           <div class="ide-block">
             <div class="ide-bar">
               <span class="dot" style="background:#ff5f57"></span>
@@ -109,9 +109,9 @@ npx loading-games init --dry-run  # preview without installing`
 
         <!-- ── Quick Start ── -->
         <section id="quick-start" style="margin-bottom:48px">
-          <h2 style="font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #30363d">Quick Start</h2>
+          <h2 class="font-display" style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(123,0,255,0.15)">Quick Start</h2>
 
-          <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#8b949e;margin-bottom:10px">React</h3>
+          <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#9b30ff;margin-bottom:10px">React</h3>
           <div class="ide-block" style="margin-bottom:20px">
             <div class="ide-bar">
               <span class="dot" style="background:#ff5f57"></span>
@@ -122,7 +122,7 @@ npx loading-games init --dry-run  # preview without installing`
             <Code code={reactCode} lang="tsx" theme="github-dark" />
           </div>
 
-          <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#8b949e;margin-bottom:10px">Vue 3</h3>
+          <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#9b30ff;margin-bottom:10px">Vue 3</h3>
           <div class="ide-block" style="margin-bottom:20px">
             <div class="ide-bar">
               <span class="dot" style="background:#ff5f57"></span>
@@ -133,7 +133,7 @@ npx loading-games init --dry-run  # preview without installing`
             <Code code={vueCode} lang="vue" theme="github-dark" />
           </div>
 
-          <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#8b949e;margin-bottom:10px">Vanilla JS / Web Component</h3>
+          <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#9b30ff;margin-bottom:10px">Vanilla JS / Web Component</h3>
           <div class="ide-block">
             <div class="ide-bar">
               <span class="dot" style="background:#ff5f57"></span>
@@ -147,18 +147,18 @@ npx loading-games init --dry-run  # preview without installing`
 
         <!-- ── Configuration ── -->
         <section id="configuration" style="margin-bottom:48px">
-          <h2 style="font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #30363d">Configuration</h2>
+          <h2 class="font-display" style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(123,0,255,0.15)">Configuration</h2>
           <div style="overflow-x:auto">
             <table style="width:100%;font-size:13px;border-collapse:collapse">
               <thead>
-                <tr style="border-bottom:1px solid #30363d">
-                  <th style="text-align:left;padding:10px 16px 10px 0;color:#8b949e;font-weight:600">Prop</th>
-                  <th style="text-align:left;padding:10px 16px 10px 0;color:#8b949e;font-weight:600">Type</th>
-                  <th style="text-align:left;padding:10px 16px 10px 0;color:#8b949e;font-weight:600">Default</th>
-                  <th style="text-align:left;padding:10px 0;color:#8b949e;font-weight:600">Description</th>
+                <tr style="border-bottom:1px solid rgba(123,0,255,0.15)">
+                  <th style="text-align:left;padding:10px 16px 10px 0;color:#6a6a8a;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-family:'JetBrains Mono',monospace">Prop</th>
+                  <th style="text-align:left;padding:10px 16px 10px 0;color:#6a6a8a;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-family:'JetBrains Mono',monospace">Type</th>
+                  <th style="text-align:left;padding:10px 16px 10px 0;color:#6a6a8a;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-family:'JetBrains Mono',monospace">Default</th>
+                  <th style="text-align:left;padding:10px 0;color:#6a6a8a;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-family:'JetBrains Mono',monospace">Description</th>
                 </tr>
               </thead>
-              <tbody style="color:#8b949e">
+              <tbody style="color:#B0B0C8">
                 {[
                   ['game',          "GameName | 'random'",      "'random'",   'Which game to render'],
                   ['active',        'boolean',                  'false',      'Starts/stops the game'],
@@ -170,11 +170,11 @@ npx loading-games init --dry-run  # preview without installing`
                   ['saveScores',    'boolean',                  'true',       'Persist personal bests in localStorage'],
                   ['namespace',     'string',                   'undefined',  'Scope score storage per instance'],
                 ].map(([prop, type, def, desc]) => (
-                  <tr style="border-bottom:1px solid #21262d">
-                    <td style="padding:9px 16px 9px 0"><code style="font-family:monospace;font-size:12px;color:#79c0ff">{prop}</code></td>
-                    <td style="padding:9px 16px 9px 0"><code style="font-family:monospace;font-size:12px;color:#bc8cff">{type}</code></td>
-                    <td style="padding:9px 16px 9px 0"><code style="font-family:monospace;font-size:12px;color:#a5d6ff">{def}</code></td>
-                    <td style="padding:9px 0;color:#8b949e">{desc}</td>
+                  <tr style="border-bottom:1px solid rgba(123,0,255,0.08)">
+                    <td style="padding:9px 16px 9px 0"><code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">{prop}</code></td>
+                    <td style="padding:9px 16px 9px 0"><code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#e8b4ff">{type}</code></td>
+                    <td style="padding:9px 16px 9px 0"><code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#9b30ff">{def}</code></td>
+                    <td style="padding:9px 0;color:#B0B0C8">{desc}</td>
                   </tr>
                 ))}
               </tbody>
@@ -184,12 +184,12 @@ npx loading-games init --dry-run  # preview without installing`
 
         <!-- ── Theming ── -->
         <section id="theming" style="margin-bottom:48px">
-          <h2 style="font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #30363d">Theming</h2>
-          <p style="font-size:14px;color:#8b949e;margin-bottom:12px">Theme resolution priority (highest first):</p>
-          <ol style="font-size:14px;color:#8b949e;padding-left:20px;margin-bottom:16px;display:flex;flex-direction:column;gap:6px">
-            <li>Explicit <code style="font-family:monospace;font-size:12px;color:#79c0ff">theme</code> prop / attribute</li>
-            <li>CSS variables: <code style="font-family:monospace;font-size:12px;color:#79c0ff">--lg-primary</code>, <code style="font-family:monospace;font-size:12px;color:#79c0ff">--lg-background</code>, …</li>
-            <li>System <code style="font-family:monospace;font-size:12px;color:#79c0ff">prefers-color-scheme</code> detection</li>
+          <h2 class="font-display" style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(123,0,255,0.15)">Theming</h2>
+          <p style="font-size:14px;color:#B0B0C8;margin-bottom:12px">Theme resolution priority (highest first):</p>
+          <ol style="font-size:14px;color:#B0B0C8;padding-left:20px;margin-bottom:16px;display:flex;flex-direction:column;gap:6px">
+            <li>Explicit <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">theme</code> prop / attribute</li>
+            <li>CSS variables: <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">--lg-primary</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">--lg-background</code>, …</li>
+            <li>System <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">prefers-color-scheme</code> detection</li>
           </ol>
           <div class="ide-block">
             <div class="ide-bar">
@@ -204,8 +204,8 @@ npx loading-games init --dry-run  # preview without installing`
 
         <!-- ── Games ── -->
         <section id="games" style="margin-bottom:48px">
-          <h2 style="font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #30363d">Available Games</h2>
-          <p style="font-size:14px;color:#8b949e;margin-bottom:16px">All games are lazy-loaded. Use <code style="font-family:monospace;font-size:12px;color:#79c0ff">game="random"</code> to pick one at random.</p>
+          <h2 class="font-display" style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(123,0,255,0.15)">Available Games</h2>
+          <p style="font-size:14px;color:#B0B0C8;margin-bottom:16px">All games are lazy-loaded. Use <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">game="random"</code> to pick one at random.</p>
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
             {[
               { name: 'snake',        size: '2.8 kB', controls: 'Arrow keys / swipe',    ready: true  },
@@ -217,16 +217,16 @@ npx loading-games init --dry-run  # preview without installing`
               { name: 'wordle-lite',  size: '~1 kB',  controls: 'Keyboard',               ready: false },
               { name: 'asteroids',    size: '~1 kB',  controls: 'Arrow keys + space',     ready: false },
             ].map((g) => (
-              <div style={`background:#161b22;border:1px solid ${g.ready ? '#30363d' : '#21262d'};border-radius:10px;padding:12px 14px;opacity:${g.ready ? 1 : 0.6}`}>
+              <div style={`background:rgba(15,15,26,0.7);border:1px solid ${g.ready ? 'rgba(123,0,255,0.2)' : 'rgba(123,0,255,0.08)'};border-radius:10px;padding:12px 14px;opacity:${g.ready ? 1 : 0.55};backdrop-filter:blur(8px)`}>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-                  <code style="font-family:monospace;font-size:12px;color:#79c0ff">{g.name}</code>
-                  <span style={`font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;${g.ready ? 'color:#39d353;background:#39d35318' : 'color:#8b949e;background:#21262d'}`}>
-                    {g.ready ? 'live' : 'v1.1'}
+                  <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">{g.name}</code>
+                  <span style={`font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;letter-spacing:0.05em;${g.ready ? 'color:#39d353;background:rgba(57,211,83,0.1);border:1px solid rgba(57,211,83,0.25)' : 'color:#6a6a8a;background:rgba(106,106,138,0.1);border:1px solid rgba(106,106,138,0.2)'}`}>
+                    {g.ready ? 'LIVE' : 'v1.1'}
                   </span>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between">
-                  <span style="font-size:11px;color:#8b949e">{g.controls}</span>
-                  <span style="font-size:11px;color:#8b949e;font-family:monospace">{g.size}</span>
+                  <span style="font-size:11px;color:#B0B0C8">{g.controls}</span>
+                  <span style="font-size:11px;color:#9b30ff;font-family:'JetBrains Mono',monospace">{g.size}</span>
                 </div>
               </div>
             ))}
@@ -235,14 +235,14 @@ npx loading-games init --dry-run  # preview without installing`
 
         <!-- ── Events ── -->
         <section id="events" style="margin-bottom:48px">
-          <h2 style="font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #30363d">Events</h2>
+          <h2 class="font-display" style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(123,0,255,0.15)">Events</h2>
           <div style="overflow-x:auto">
             <table style="width:100%;font-size:13px;border-collapse:collapse">
               <thead>
-                <tr style="border-bottom:1px solid #30363d">
-                  <th style="text-align:left;padding:10px 16px 10px 0;color:#8b949e;font-weight:600">Event</th>
-                  <th style="text-align:left;padding:10px 16px 10px 0;color:#8b949e;font-weight:600">Detail Type</th>
-                  <th style="text-align:left;padding:10px 0;color:#8b949e;font-weight:600">Description</th>
+                <tr style="border-bottom:1px solid rgba(123,0,255,0.15)">
+                  <th style="text-align:left;padding:10px 16px 10px 0;color:#6a6a8a;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-family:'JetBrains Mono',monospace">Event</th>
+                  <th style="text-align:left;padding:10px 16px 10px 0;color:#6a6a8a;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-family:'JetBrains Mono',monospace">Detail Type</th>
+                  <th style="text-align:left;padding:10px 0;color:#6a6a8a;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-family:'JetBrains Mono',monospace">Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -252,10 +252,10 @@ npx loading-games init --dry-run  # preview without installing`
                   ['lg:complete', '—',          'Exit animation finished — game fully removed'],
                   ['lg:error',    'Error',      'Fires on loading or runtime error'],
                 ].map(([evt, detail, desc]) => (
-                  <tr style="border-bottom:1px solid #21262d">
-                    <td style="padding:9px 16px 9px 0"><code style="font-family:monospace;font-size:12px;color:#ff7b72">{evt}</code></td>
-                    <td style="padding:9px 16px 9px 0"><code style="font-family:monospace;font-size:12px;color:#bc8cff">{detail}</code></td>
-                    <td style="padding:9px 0;color:#8b949e;font-size:13px">{desc}</td>
+                  <tr style="border-bottom:1px solid rgba(123,0,255,0.08)">
+                    <td style="padding:9px 16px 9px 0"><code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#ff9580">{evt}</code></td>
+                    <td style="padding:9px 16px 9px 0"><code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#e8b4ff">{detail}</code></td>
+                    <td style="padding:9px 0;color:#B0B0C8;font-size:13px">{desc}</td>
                   </tr>
                 ))}
               </tbody>
@@ -265,12 +265,12 @@ npx loading-games init --dry-run  # preview without installing`
 
         <!-- ── Accessibility ── -->
         <section id="accessibility" style="margin-bottom:48px">
-          <h2 style="font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #30363d">Accessibility</h2>
-          <ul style="font-size:14px;color:#8b949e;padding-left:20px;display:flex;flex-direction:column;gap:8px">
-            <li><code style="font-family:monospace;font-size:12px;color:#79c0ff">role="application"</code> + game-specific <code style="font-family:monospace;font-size:12px;color:#79c0ff">aria-label</code> on every canvas</li>
+          <h2 class="font-display" style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(123,0,255,0.15)">Accessibility</h2>
+          <ul style="font-size:14px;color:#B0B0C8;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+            <li><code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">role="application"</code> + game-specific <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">aria-label</code> on every canvas</li>
             <li>Skip link "Skip game, wait for loading" — always first tab stop</li>
-            <li><code style="font-family:monospace;font-size:12px;color:#79c0ff">prefers-reduced-motion</code>: static fallback, no gameplay</li>
-            <li>Auto-pause on tab hidden (<code style="font-family:monospace;font-size:12px;color:#79c0ff">visibilitychange</code>)</li>
+            <li><code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">prefers-reduced-motion</code>: static fallback, no gameplay</li>
+            <li>Auto-pause on tab hidden (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">visibilitychange</code>)</li>
             <li>Virtual D-pad on touch for keyboard-dependent games</li>
             <li>Min 44×44px tap targets (WCAG 2.5.5 AAA)</li>
           </ul>
@@ -278,7 +278,7 @@ npx loading-games init --dry-run  # preview without installing`
 
         <!-- ── CLI ── -->
         <section id="cli" style="margin-bottom:48px">
-          <h2 style="font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #30363d">CLI Tool</h2>
+          <h2 class="font-display" style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(123,0,255,0.15)">CLI Tool</h2>
           <div class="ide-block" style="margin-bottom:14px">
             <div class="ide-bar">
               <span class="dot" style="background:#ff5f57"></span>
@@ -288,11 +288,11 @@ npx loading-games init --dry-run  # preview without installing`
             </div>
             <Code code={cliCode} lang="bash" theme="github-dark" />
           </div>
-          <p style="font-size:14px;color:#8b949e">
-            The CLI detects your framework from <code style="font-family:monospace;font-size:12px;color:#79c0ff">package.json</code> dependencies and config files
-            (<code style="font-family:monospace;font-size:12px;color:#79c0ff">next.config.*</code>,
-            <code style="font-family:monospace;font-size:12px;color:#79c0ff">nuxt.config.*</code>,
-            <code style="font-family:monospace;font-size:12px;color:#79c0ff">svelte.config.*</code>),
+          <p style="font-size:14px;color:#B0B0C8">
+            The CLI detects your framework from <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">package.json</code> dependencies and config files
+            (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">next.config.*</code>,
+            <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">nuxt.config.*</code>,
+            <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#c060ff">svelte.config.*</code>),
             then prints a ready-to-paste framework-specific snippet.
           </p>
         </section>
