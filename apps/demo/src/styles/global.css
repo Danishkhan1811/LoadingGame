@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @layer base {
   :root {
@@ -44,32 +44,58 @@
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    @apply rounded-2xl;
+    border-radius: 1rem;
   }
   .card-hover {
-    @apply card transition-all duration-300 hover:-translate-y-1;
-    box-shadow: 0 0 0 0 transparent;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: none;
   }
   .card-hover:hover {
+    transform: translateY(-4px);
     border-color: #2f81f7;
     box-shadow: 0 0 0 1px #2f81f740, 0 8px 32px #2f81f720;
   }
 
   /* ── Buttons ────────────────────────────────── */
   .btn-primary {
+    display: inline-flex;
+    align-items: center;
     background: var(--brand);
     color: #fff;
-    @apply px-6 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
   }
   .btn-primary:hover {
     background: #388bfd;
     box-shadow: 0 0 20px #2f81f750;
-    @apply -translate-y-px;
+    transform: translateY(-1px);
   }
   .btn-ghost {
+    display: inline-flex;
+    align-items: center;
     background: var(--surface-2);
     border: 1px solid var(--border);
-    @apply px-6 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 hover:-translate-y-px;
+    color: var(--text);
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn-ghost:hover {
+    transform: translateY(-1px);
+    border-color: #8b949e;
   }
 
   /* ── Text ───────────────────────────────────── */
@@ -88,6 +114,7 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(120px);
+    opacity: 0.18;
     pointer-events: none;
     animation: pulse-glow 4s ease-in-out infinite;
   }
@@ -96,28 +123,44 @@
   .ide-block {
     background: var(--surface);
     border: 1px solid var(--border);
-    @apply rounded-xl overflow-hidden font-mono text-sm;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px;
   }
   .ide-block .ide-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
     background: var(--surface-2);
     border-bottom: 1px solid var(--border);
-    @apply flex items-center gap-2 px-4 py-2.5 text-xs;
+    font-size: 12px;
     color: var(--text-muted);
   }
   .ide-block .ide-bar .dot {
-    width: 10px; height: 10px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     display: inline-block;
+    flex-shrink: 0;
   }
   .ide-block pre {
-    @apply p-5 overflow-x-auto leading-relaxed;
+    padding: 20px;
+    overflow-x: auto;
+    line-height: 1.65;
     margin: 0;
   }
 
   /* ── Sidebar nav ────────────────────────────── */
   .sidebar-link {
-    @apply block px-3 py-2 rounded-lg text-sm transition-all duration-150;
+    display: block;
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background 0.15s ease, color 0.15s ease;
     color: var(--text-muted);
+    text-decoration: none;
   }
   .sidebar-link:hover {
     background: var(--surface-2);
@@ -131,13 +174,23 @@
 
   /* ── Modal ──────────────────────────────────── */
   .modal-backdrop {
-    @apply fixed inset-0 z-50 flex items-center justify-center;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: rgba(3, 7, 18, 0.85);
     backdrop-filter: blur(8px);
   }
   .modal-panel {
     background: var(--surface);
     border: 1px solid var(--border);
-    @apply rounded-2xl shadow-2xl w-full max-w-2xl mx-4 overflow-hidden;
+    border-radius: 1rem;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+    width: 100%;
+    max-width: 42rem;
+    margin: 0 16px;
+    overflow: hidden;
   }
 }
