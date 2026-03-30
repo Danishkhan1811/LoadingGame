@@ -1,0 +1,6 @@
+{
+  "framework": "astro",
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "buildCommand": "cd ../.. && pnpm turbo run build --filter=loading-games-demo",
+  "outputDirectory": "dist"
+}
