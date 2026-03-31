@@ -191,14 +191,26 @@ export class GameController {
     const size = this.options.size ?? 'md'
     const dimensions = SIZE_MAP[size]
 
-    // Container
+    // Make host a positioned container so the overlay can fill it
+    if (size !== 'full') {
+      Object.assign(this.host.style, {
+        position: 'relative',
+        display: 'block',
+        overflow: 'hidden',
+        // Only apply fallback min-dimensions if no explicit inline size is set
+        ...(this.host.style.width ? {} : { minWidth: `${dimensions.width}px` }),
+        ...(this.host.style.height ? {} : { minHeight: `${dimensions.height}px` }),
+      })
+    }
+
+    // Container — fills the host for fixed sizes, fills the viewport for full
     this.overlay = document.createElement('div')
     this.overlay.setAttribute('data-lg-overlay', '')
     Object.assign(this.overlay.style, {
-      position: size === 'full' ? 'fixed' : 'relative',
-      inset: size === 'full' ? '0' : 'auto',
-      width: size === 'full' ? '100%' : `${dimensions.width}px`,
-      height: size === 'full' ? '100%' : `${dimensions.height}px`,
+      position: size === 'full' ? 'fixed' : 'absolute',
+      inset: '0',
+      width: '100%',
+      height: '100%',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',

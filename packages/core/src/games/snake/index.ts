@@ -39,6 +39,8 @@ export class SnakeGame implements GamePlugin {
   private animFrameId: number | null = null
   private running = false
   private cellSize = 0
+  private cols = GRID_SIZE
+  private rows = GRID_SIZE
 
   private boundKeyDown: (e: KeyboardEvent) => void
   private boundTouchStart: (e: TouchEvent) => void
@@ -77,6 +79,8 @@ export class SnakeGame implements GamePlugin {
     canvas.style.height = `${rect.height}px`
 
     this.cellSize = Math.floor(rect.width / GRID_SIZE)
+    this.cols = GRID_SIZE
+    this.rows = Math.floor(rect.height / this.cellSize)
     this.isTouchDevice = 'ontouchstart' in window
     this.reset()
   }
@@ -101,8 +105,8 @@ export class SnakeGame implements GamePlugin {
     let pos: Point
     do {
       pos = {
-        x: Math.floor(Math.random() * GRID_SIZE),
-        y: Math.floor(Math.random() * GRID_SIZE),
+        x: Math.floor(Math.random() * this.cols),
+        y: Math.floor(Math.random() * this.rows),
       }
     } while (occupied.has(`${pos.x},${pos.y}`))
     this.food = pos
@@ -163,8 +167,8 @@ export class SnakeGame implements GamePlugin {
 
     const head = this.snake[0]!
     const next: Point = {
-      x: (head.x + (this.direction === 'right' ? 1 : this.direction === 'left' ? -1 : 0) + GRID_SIZE) % GRID_SIZE,
-      y: (head.y + (this.direction === 'down' ? 1 : this.direction === 'up' ? -1 : 0) + GRID_SIZE) % GRID_SIZE,
+      x: (head.x + (this.direction === 'right' ? 1 : this.direction === 'left' ? -1 : 0) + this.cols) % this.cols,
+      y: (head.y + (this.direction === 'down' ? 1 : this.direction === 'up' ? -1 : 0) + this.rows) % this.rows,
     }
 
     // Collision with self
