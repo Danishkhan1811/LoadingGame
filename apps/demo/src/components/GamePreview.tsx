@@ -11,22 +11,22 @@ export default function GamePreview({ game = 'snake', active = true, theme, size
   const ref = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    import('loading-games')
-  }, [])
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    if (theme) {
-      (el as HTMLElement & { theme: Record<string, string> }).theme = theme
-    }
-  }, [theme])
+    let cancelled = false
+    import('loading-games').then(() => {
+      if (cancelled) return
+      const el = ref.current as (HTMLElement & { theme?: Record<string, string> }) | null
+      if (!el) return
+      // Apply theme BEFORE activating so the game starts with the right colours
+      if (theme) el.theme = theme
+      if (active) el.setAttribute('active', 'true')
+    })
+    return () => { cancelled = true }
+  }, []) // Intentionally mount-only — parent drives remounts via key
 
   return (
     <loading-game
       ref={ref as React.Ref<HTMLElement>}
       game={game}
-      active={active ? 'true' : undefined}
       size={size}
       style={{ width: '100%', height: '100%', display: 'block' }}
     />

@@ -1,4 +1,4 @@
-import { useState, useCallback, type CSSProperties } from 'react'
+import { useState, useCallback, useRef, type CSSProperties } from 'react'
 import GamePreview from './GamePreview'
 
 const GAMES = ['snake', 'flappy', 'memory-cards', 'whack-a-mole'] as const
@@ -33,9 +33,23 @@ export default function ThemeConfigurator() {
   const [game, setGame] = useState<string>('snake')
   const [size, setSize] = useState<string>('md')
   const [theme, setTheme] = useState({ ...DEFAULT_THEME })
+  const [previewKey, setPreviewKey] = useState(0)
+  const themeTimerRef = useRef<ReturnType<typeof setTimeout>>()
+
+  const handleGameChange = useCallback((g: string) => {
+    setGame(g)
+    setPreviewKey((k) => k + 1)
+  }, [])
+
+  const handleSizeChange = useCallback((s: string) => {
+    setSize(s)
+    setPreviewKey((k) => k + 1)
+  }, [])
 
   const updateColor = useCallback((key: string, value: string) => {
     setTheme((prev) => ({ ...prev, [key]: value }))
+    clearTimeout(themeTimerRef.current)
+    themeTimerRef.current = setTimeout(() => setPreviewKey((k) => k + 1), 400)
   }, [])
 
   const snippet = `<LoadingGame
@@ -87,7 +101,7 @@ export default function ThemeConfigurator() {
           }} />
           {/* Game — contained with lg size, no "full" */}
           <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
-            <GamePreview game={game} active={true} theme={theme} size="lg" />
+            <GamePreview key={previewKey} game={game} active={true} theme={theme} size={size} />
           </div>
         </div>
       </div>
@@ -102,7 +116,7 @@ export default function ThemeConfigurator() {
             {GAMES.map((g) => (
               <button
                 key={g}
-                onClick={() => setGame(g)}
+                onClick={() => handleGameChange(g)}
                 style={{
                   padding: '6px 14px',
                   borderRadius: 8,
@@ -129,7 +143,7 @@ export default function ThemeConfigurator() {
             {SIZES.map((s) => (
               <button
                 key={s}
-                onClick={() => setSize(s)}
+                onClick={() => handleSizeChange(s)}
                 style={{
                   padding: '5px 16px',
                   borderRadius: 8,
